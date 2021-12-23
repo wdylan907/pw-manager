@@ -30,4 +30,6 @@ const sessionConfig = {
 
 const port = process.env.PORT
 
-module.exports = { connectToDB, sessionConfig, port }
+const clientURL = process.env.CLIENT_URL
+
+module.exports = { connectToDB, sessionConfig, port, clientURL }

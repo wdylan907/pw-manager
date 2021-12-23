@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+const config = require('./config')
 
 function App() {
   axios.defaults.withCredentials = true
 
   async function getData() {
-    let res = await axios.get(`http://localhost:5000/`)
+    let res = await axios.get(config.server_url)
     console.log(res.data)
   }
 
@@ -15,7 +16,7 @@ function App() {
       username: 'user2',
       password: 'pass',
     }
-    await axios.post('http://localhost:5000/login', req)
+    await axios.post(`${config.server_url}/login`, req)
     getData()
   }
 
