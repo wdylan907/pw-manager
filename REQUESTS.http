@@ -32,5 +32,24 @@ POST http://localhost:3000/entry
 Content-Type: application/json
 
 {
-    "label": "new entry"
+    "label": "second entry"
+}
+
+###
+GET http://localhost:3000/user/:id
+Content-Type: application/json
+
+{
+    "id": "61c401dd85ea4add7764f835"
+}
+
+###
+POST http://localhost:3000/entry/:entryId
+Content-Type: application/json
+
+{
+    "id": "61c401dd85ea4add7764f835",
+    "entryId": "61c4052a52a0745f4947c068",
+    "fieldLabel": "a new label",
+    "fieldContent": "some content"
 }

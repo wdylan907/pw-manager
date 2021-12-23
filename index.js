@@ -87,6 +87,24 @@ app.post('/entry', isAuth, async (req, res) => {
   }
 })
 
+app.get('/user/:id', async (req, res) => {
+  const id = req.body.id
+  const user = await User.findById(id)
+  console.log(user)
+  res.json(user)
+})
+
+app.post('/entry/:entryId', async (req, res) => {
+  const id = req.body.id
+  const user = await User.findById(id)
+  const entryId = req.body.entryId
+  const entry = user.vault.id(entryId)
+  entry.fields.set(req.body.fieldLabel, req.body.fieldContent)
+  await user.save()
+  console.log(user)
+  res.json(user)
+})
+
 app.listen(3000, () => {
   console.log('listening on port 3000')
 })
