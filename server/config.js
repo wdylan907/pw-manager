@@ -14,13 +14,16 @@ const connectToDB = () => {
   })
 }
 
-const sessionStore = new MongoDBStore({
-  uri: mongoURI,
-  collection: 'sessions',
-})
+const sessionConfig = {
+  secret: process.env.SECRET,
+  resave: false,
+  saveUninitialized: false,
+  store: new MongoDBStore({
+    uri: mongoURI,
+    collection: 'sessions',
+  }),
+}
 
 const port = process.env.PORT
 
-const secret = process.env.SECRET
-
-module.exports = { connectToDB, sessionStore, port, secret }
+module.exports = { connectToDB, sessionConfig, port }

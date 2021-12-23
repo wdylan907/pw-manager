@@ -7,17 +7,9 @@ const router = require('./controllers/router')
 config.connectToDB()
 
 const app = express()
-
-app.use(
-  session({
-    secret: config.secret,
-    resave: false,
-    saveUninitialized: false,
-    store: config.sessionStore,
-  })
-)
 app.use(express.json())
 app.use(cors())
+app.use(session(config.sessionConfig))
 app.use(router)
 
 app.listen(config.port, () => {
