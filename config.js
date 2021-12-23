@@ -1,9 +1,12 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 const session = require('express-session')
 const MongoDBStore = require('connect-mongodb-session')(session)
 const mongoose = require('mongoose')
 
-const mongoURI =
-  'mongodb+srv://user2:user2@cluster0.tg9sg.mongodb.net/login4?retryWrites=true&w=majority'
+const mongoURI = process.env.MONGODB_URI
 
 const connectToDB = () => {
   mongoose.connect(mongoURI, () => {
@@ -16,4 +19,8 @@ const mongoStore = new MongoDBStore({
   collection: 'sessions',
 })
 
-module.exports = { connectToDB, mongoStore }
+const port = process.env.PORT
+
+const secret = process.env.SECRET
+
+module.exports = { connectToDB, mongoStore, port, secret }

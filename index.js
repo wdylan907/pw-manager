@@ -1,117 +1,23 @@
 const express = require('express')
 const session = require('express-session')
-const bcrypt = require('bcrypt')
-const User = require('./models/user')
 const config = require('./config')
-const isAuth = require('./middleware/isAuth')
-const isNotAuth = require('./middleware/isNotAuth')
+const router = require('./controllers/router')
 
 config.connectToDB()
 
 const app = express()
+
 app.use(
   session({
-    secret: 'secret',
+    secret: config.secret,
     resave: false,
     saveUninitialized: false,
     store: config.mongoStore,
   })
 )
 app.use(express.json())
+app.use(router)
 
-app.get('/', isAuth, (req, res) => {
-  res.send('landing')
-})
-
-app.get('/login', isNotAuth, (req, res) => {
-  res.send('login')
-})
-
-app.post('/login', async (req, res) => {
-  try {
-    const user = await User.findOne({ username: req.body.username })
-    const correctPassword = await bcrypt.compare(
-      req.body.password,
-      user.passwordHash
-    )
-    if (!user || !correctPassword) {
-      console.log('invalid username or password')
-      return res.redirect('/login')
-    }
-    req.session.isAuth = true
-    req.session.username = user.username
-    console.log(`logging on user: ${user.username}`)
-    res.redirect('/')
-  } catch (error) {
-    console.log(error)
-  }
-})
-
-app.get('/register', isNotAuth, (req, res) => {
-  res.send('registration')
-})
-
-app.post('/register', async (req, res) => {
-  try {
-    const existingUser = await User.findOne({ username: req.body.username })
-    if (existingUser) {
-      console.log('username in use')
-      return res.redirect('/register')
-    }
-    const passwordHash = await bcrypt.hash(req.body.password, 10)
-    const newUser = new User({
-      username: req.body.username,
-      passwordHash,
-    })
-    await newUser.save()
-    console.log(newUser.username, passwordHash)
-  } catch (error) {
-    console.log(error)
-  }
-})
-
-app.post('/logout', (req, res) => {
-  req.session.destroy(err => {
-    if (err) throw err
-    res.redirect('/login')
-  })
-})
-
-app.get('/user/', isAuth, async (req, res) => {
-  try {
-    const user = await User.findOne({ username: req.session.username })
-    console.log(user)
-    res.json(user)
-  } catch (error) {
-    console.log(user)
-  }
-})
-
-app.post('/entry', isAuth, async (req, res) => {
-  try {
-    const user = await User.findOne({ username: req.session.username })
-    console.log(user)
-    user.vault.push({ label: req.body.label })
-    await user.save()
-    console.log('entry added')
-  } catch (error) {
-    console.log(error)
-  }
-})
-
-app.post('/entry/:id', isAuth, async (req, res) => {
-  try {
-    const user = await User.findOne({ username: req.session.username })
-    const entry = user.vault.id(req.body.id)
-    entry.fields.set(req.body.fieldLabel, req.body.fieldContent)
-    await user.save()
-    console.log(user)
-    res.json(user)
-  } catch (error) {
-    console.log(error)
-  }
-})
-
-app.listen(3000, () => {
-  console.log('listening on port 3000')
+app.listen(config.port, () => {
+  console.log(`listening on port ${config.port}`)
 })
