@@ -17,11 +17,15 @@ const connectToDB = () => {
 const sessionConfig = {
   secret: process.env.SECRET,
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: true,
   store: new MongoDBStore({
     uri: mongoURI,
     collection: 'sessions',
   }),
+  cookie: {
+    httpOnly: true,
+    maxAge: 360000,
+  },
 }
 
 const port = process.env.PORT
