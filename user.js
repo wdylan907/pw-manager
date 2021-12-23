@@ -1,5 +1,13 @@
 const mongoose = require('mongoose')
-const Entry = require('./entry')
+
+const entrySchema = new mongoose.Schema({
+  label: { type: String, required: true },
+  fields: {
+    type: Map,
+    of: String,
+    default: {},
+  },
+})
 
 const schema = new mongoose.Schema({
   username: {
@@ -11,7 +19,7 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  vault: [Entry],
+  vault: [entrySchema],
 })
 
 schema.set('toJSON', {
