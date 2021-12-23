@@ -75,6 +75,18 @@ app.post('/logout', (req, res) => {
   })
 })
 
+app.post('/entry', isAuth, async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.session.username })
+    console.log(user)
+    user.vault.push({ label: req.body.label })
+    await user.save()
+    console.log('entry added')
+  } catch (error) {
+    console.log(error)
+  }
+})
+
 app.listen(3000, () => {
   console.log('listening on port 3000')
 })
