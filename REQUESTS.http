@@ -32,7 +32,7 @@ POST http://localhost:3000/entry
 Content-Type: application/json
 
 {
-    "label": "second entry"
+    "label": "another entry"
 }
 
 ###

@@ -12,10 +12,11 @@ app.use(
     secret: config.secret,
     resave: false,
     saveUninitialized: false,
-    store: config.mongoStore,
+    store: config.sessionStore,
   })
 )
 app.use(express.json())
+app.use(cors())
 app.use(router)
 
 app.listen(config.port, () => {

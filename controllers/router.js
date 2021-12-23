@@ -25,7 +25,7 @@ router.post('/login', async (req, res) => {
     }
     req.session.isAuth = true
     req.session.username = user.username
-    console.log(`logging on user: ${user.username}`)
+    console.log(`logging on user ${user.username}`)
     res.redirect('/')
   } catch (error) {
     console.log(error)
@@ -49,15 +49,17 @@ router.post('/register', async (req, res) => {
       passwordHash,
     })
     await newUser.save()
-    console.log(newUser.username, passwordHash)
+    console.log(`user ${newUser.username} registered`)
   } catch (error) {
     console.log(error)
   }
 })
 
 router.post('/logout', (req, res) => {
+  const user = req.session.username
   req.session.destroy(err => {
     if (err) throw err
+    console.log(`user ${user} logged out`)
     res.redirect('/login')
   })
 })
@@ -75,10 +77,10 @@ router.get('/user/', isAuth, async (req, res) => {
 router.post('/entry', isAuth, async (req, res) => {
   try {
     const user = await User.findOne({ username: req.session.username })
-    console.log(user)
     user.vault.push({ label: req.body.label })
     await user.save()
-    console.log('entry added')
+    console.log(`entry for ${req.body.label} added`)
+    res.json(user)
   } catch (error) {
     console.log(error)
   }
