@@ -87,22 +87,23 @@ app.post('/entry', isAuth, async (req, res) => {
   }
 })
 
-app.get('/user/:id', async (req, res) => {
-  const id = req.body.id
-  const user = await User.findById(id)
+app.get('/user/', isAuth, async (req, res) => {
+  const user = await User.findOne({ username: req.session.username })
   console.log(user)
   res.json(user)
 })
 
-app.post('/entry/:entryId', async (req, res) => {
-  const id = req.body.id
-  const user = await User.findById(id)
-  const entryId = req.body.entryId
-  const entry = user.vault.id(entryId)
-  entry.fields.set(req.body.fieldLabel, req.body.fieldContent)
-  await user.save()
-  console.log(user)
-  res.json(user)
+app.post('/entry/:id', isAuth, async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.session.username })
+    const entry = user.vault.id(req.body.id)
+    entry.fields.set(req.body.fieldLabel, req.body.fieldContent)
+    await user.save()
+    console.log(user)
+    res.json(user)
+  } catch (error) {
+    console.log(error)
+  }
 })
 
 app.listen(3000, () => {
