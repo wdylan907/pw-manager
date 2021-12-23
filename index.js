@@ -1,10 +1,12 @@
 const express = require('express')
 const session = require('express-session')
 const bcrypt = require('bcrypt')
-const User = require('./user')
-const mongoConfig = require('./mongo-config')
+const User = require('./models/user')
+const config = require('./config')
+const isAuth = require('./middleware/isAuth')
+const isNotAuth = require('./middleware/isNotAuth')
 
-mongoConfig.connect()
+config.connectToDB()
 
 const app = express()
 app.use(
@@ -12,7 +14,7 @@ app.use(
     secret: 'secret',
     resave: false,
     saveUninitialized: false,
-    store: mongoConfig.store,
+    store: config.mongoStore,
   })
 )
 app.use(express.json())
@@ -75,6 +77,16 @@ app.post('/logout', (req, res) => {
   })
 })
 
+app.get('/user/', isAuth, async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.session.username })
+    console.log(user)
+    res.json(user)
+  } catch (error) {
+    console.log(user)
+  }
+})
+
 app.post('/entry', isAuth, async (req, res) => {
   try {
     const user = await User.findOne({ username: req.session.username })
@@ -85,12 +97,6 @@ app.post('/entry', isAuth, async (req, res) => {
   } catch (error) {
     console.log(error)
   }
-})
-
-app.get('/user/', isAuth, async (req, res) => {
-  const user = await User.findOne({ username: req.session.username })
-  console.log(user)
-  res.json(user)
 })
 
 app.post('/entry/:id', isAuth, async (req, res) => {
@@ -109,19 +115,3 @@ app.post('/entry/:id', isAuth, async (req, res) => {
 app.listen(3000, () => {
   console.log('listening on port 3000')
 })
-
-function isAuth(req, res, next) {
-  if (req.session.isAuth) {
-    return next()
-  }
-  console.log('for logged in users only')
-  res.redirect('/login')
-}
-
-function isNotAuth(req, res, next) {
-  if (req.session.isAuth) {
-    console.log('not for logged in users')
-    return res.redirect('/')
-  }
-  next()
-}

@@ -11,7 +11,7 @@ POST http://localhost:3000/register
 Content-Type: application/json
 
 {
-    "username": "user3",
+    "username": "user4",
     "password": "pass"
 }
 
@@ -36,19 +36,14 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3000/user/:id
-Content-Type: application/json
-
-{
-    "id": "61c401dd85ea4add7764f835"
-}
+GET http://localhost:3000/user/
 
 ###
 POST http://localhost:3000/entry/:entryId
 Content-Type: application/json
 
 {
-    "id": "61c4052a52a0745f4947c068",
+    "id": "61c49cd75b9de7dfc50ac551",
     "fieldLabel": "third label",
     "fieldContent": "third content"
 }
