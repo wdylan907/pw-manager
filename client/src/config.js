@@ -1,3 +1,7 @@
 const server_url = 'http://localhost:5000'
 
-module.exports = { server_url }
+const axiosConfig = axios => {
+  axios.defaults.withCredentials = true
+}
+
+module.exports = { server_url, axiosConfig }

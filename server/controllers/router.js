@@ -5,7 +5,7 @@ const isAuth = require('../middleware/isAuth')
 const isNotAuth = require('../middleware/isNotAuth')
 
 router.get('/', isAuth, (req, res) => {
-  res.send('landing')
+  res.send('dashboard')
 })
 
 router.get('/login', isNotAuth, (req, res) => {
