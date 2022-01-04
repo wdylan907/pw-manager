@@ -10,7 +10,7 @@ function App() {
 
   const [view, setView] = useState('login')
 
-  const handleLoginClick = async event => {
+  const loginSubmit = async event => {
     event.preventDefault()
     const loginInfo = {
       username: event.target.username.value,
@@ -20,7 +20,7 @@ function App() {
     setView(res.data)
   }
 
-  const handleRegistrationClick = async event => {
+  const registrationSubmit = async event => {
     event.preventDefault()
     if (event.target.password1.value === event.target.password2.value) {
       const userInfo = {
@@ -55,10 +55,10 @@ function App() {
     }
   }
 
-  const handleLogoutClick = router('post', 'logout', setView)
+  const logout = router('post', 'logout', setView)
   const getUserData = router('get', 'user', console.log)
   const goToLogin = router('get', 'login', setView)
-  const goToRegistration = router('get', 'login', setView)
+  const goToRegistration = router('get', 'register', setView)
 
   useEffect(() => {
     async function getView() {
@@ -69,12 +69,12 @@ function App() {
   }, [])
 
   if (view === 'login') {
-    return <Login link={goToRegistration} onSubmit={handleLoginClick} />
+    return <Login link={goToRegistration} onSubmit={loginSubmit} />
   } else if (view === 'registration') {
-    return <Registration link={goToLogin} onSubmit={handleRegistrationClick} />
+    return <Registration link={goToLogin} onSubmit={registrationSubmit} />
   } else if (view === 'dashboard') {
-    return <Dashboard data={getUserData} handleClick={handleLogoutClick} />
-  } else return <Login handleClick={handleLoginClick} />
+    return <Dashboard data={getUserData} onClick={logout} />
+  }
 }
 
 export default App

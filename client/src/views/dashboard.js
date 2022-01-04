@@ -5,7 +5,7 @@ const dashboard = props => {
   return (
     <>
       <h3>dashboard</h3>
-      <button onClick={props.handleClick}>logout</button>
+      <button onClick={props.onClick}>logout</button>
     </>
   )
 }
