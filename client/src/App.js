@@ -42,22 +42,23 @@ function App() {
     }
   }
 
-  const handleLogoutClick = async () => {
-    const res = await axios.post(`${config.server_url}/logout`)
-    setView(res.data)
-  }
-
-  const getUserData = async () => {
-    const res = await axios.get(`${config.server_url}/user`)
-    console.log(res.data)
-  }
-
-  const goTo = view => {
+  const router = (method, route, callback) => {
     return async () => {
-      const res = await axios.get(`${config.server_url}/${view}`)
-      setView(res.data)
+      let res = { data: null }
+      if (method === 'get') {
+        res = await axios.get(`${config.server_url}/${route}`)
+      }
+      if (method === 'post') {
+        res = await axios.post(`${config.server_url}/${route}`)
+      }
+      callback(res.data)
     }
   }
+
+  const handleLogoutClick = router('post', 'logout', setView)
+  const getUserData = router('get', 'user', console.log)
+  const goToLogin = router('get', 'login', setView)
+  const goToRegistration = router('get', 'login', setView)
 
   useEffect(() => {
     async function getView() {
@@ -68,11 +69,9 @@ function App() {
   }, [])
 
   if (view === 'login') {
-    return <Login link={goTo('register')} onSubmit={handleLoginClick} />
+    return <Login link={goToRegistration} onSubmit={handleLoginClick} />
   } else if (view === 'registration') {
-    return (
-      <Registration link={goTo('login')} onSubmit={handleRegistrationClick} />
-    )
+    return <Registration link={goToLogin} onSubmit={handleRegistrationClick} />
   } else if (view === 'dashboard') {
     return <Dashboard data={getUserData} handleClick={handleLogoutClick} />
   } else return <Login handleClick={handleLoginClick} />
