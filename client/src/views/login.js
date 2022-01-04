@@ -22,7 +22,6 @@ const Login = props => {
       <br />
       <br />
 
-      <button onClick={props.handleClick}>login</button>
       <button onClick={props.link}>register</button>
     </>
   )

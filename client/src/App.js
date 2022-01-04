@@ -47,19 +47,16 @@ function App() {
     setView(res.data)
   }
 
-  const goToRegistration = async () => {
-    const res = await axios.get(`${config.server_url}/register`)
-    setView(res.data)
-  }
-
-  const goToLogin = async () => {
-    const res = await axios.get(`${config.server_url}/login`)
-    setView(res.data)
-  }
-
   const getUserData = async () => {
     const res = await axios.get(`${config.server_url}/user`)
     console.log(res.data)
+  }
+
+  const goTo = view => {
+    return async () => {
+      const res = await axios.get(`${config.server_url}/${view}`)
+      setView(res.data)
+    }
   }
 
   useEffect(() => {
@@ -71,9 +68,11 @@ function App() {
   }, [])
 
   if (view === 'login') {
-    return <Login link={goToRegistration} onSubmit={handleLoginClick} />
+    return <Login link={goTo('register')} onSubmit={handleLoginClick} />
   } else if (view === 'registration') {
-    return <Registration link={goToLogin} onSubmit={handleRegistrationClick} />
+    return (
+      <Registration link={goTo('login')} onSubmit={handleRegistrationClick} />
+    )
   } else if (view === 'dashboard') {
     return <Dashboard data={getUserData} handleClick={handleLogoutClick} />
   } else return <Login handleClick={handleLoginClick} />
