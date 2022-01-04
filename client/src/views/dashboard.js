@@ -1,4 +1,6 @@
 const dashboard = props => {
+  const d = props.data
+  console.log(d)
   return (
     <>
       <h3>dashboard</h3>

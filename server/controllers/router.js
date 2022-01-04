@@ -21,14 +21,15 @@ router.post('/login', async (req, res) => {
     )
     if (!user || !correctPassword) {
       console.log('invalid username or password')
-      return res.redirect('/login')
+      return res.json({ status: 1 })
     }
     req.session.isAuth = true
     req.session.username = user.username
     console.log(`logging on user ${user.username}`)
-    res.redirect('/')
+    return res.json({ status: 0 })
   } catch (error) {
     console.log(error)
+    return res.json({ status: 2 })
   }
 })
 

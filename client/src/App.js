@@ -9,6 +9,7 @@ function App() {
   const axios = config.axios
 
   const [view, setView] = useState('login')
+  const [userData, setUserData] = useState('')
 
   useEffect(() => {
     async function getView() {
@@ -25,7 +26,13 @@ function App() {
       password: event.target.password.value,
     }
     const res = await axios.post(`${serverUrl}/login`, loginInfo)
-    setView(res.data)
+    if (res.data.status === 0) {
+      const obj = await axios.get(`${serverUrl}/user`)
+      setUserData(obj.data)
+      setView('dashboard')
+    } else {
+      console.log('invalid login')
+    }
   }
 
   const registrationSubmit = async event => {
@@ -80,7 +87,7 @@ function App() {
   } else if (view === 'registration') {
     return <Registration link={goToLogin} onSubmit={registrationSubmit} />
   } else if (view === 'dashboard') {
-    return <Dashboard onClick={logout} />
+    return <Dashboard data={userData} onClick={logout} />
   }
 }
 
