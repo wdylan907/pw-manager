@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import Dashboard from './views/dashboard'
-import Login from './views/login'
-import Registration from './views/registration'
+import Dashboard from './views/Dashboard'
+import Login from './views/Login'
+import Registration from './views/Registration'
 import config from './config'
 
 function App() {
-  const serverUrl = config.serverUrl
-  const axios = config.axios
+  const { serverUrl, axios } = config
 
   const [view, setView] = useState('login')
-  const [userData, setUserData] = useState('')
 
   useEffect(() => {
     async function getView() {
@@ -27,8 +25,6 @@ function App() {
     }
     const res = await axios.post(`${serverUrl}/login`, loginInfo)
     if (res.data.status === 0) {
-      const obj = await axios.get(`${serverUrl}/user`)
-      setUserData(obj.data)
       setView('dashboard')
     } else {
       console.log('invalid login')
@@ -75,19 +71,12 @@ function App() {
   const goToLogin = router('get', 'login')
   const goToRegistration = router('get', 'register')
 
-  // const getUserData = async () => {
-  //   const res = await axios.get(`${serverUrl}/user`)
-  //   const data = res.data
-  //   console.log('app', data)
-  //   return data
-  // }
-
   if (view === 'login') {
     return <Login link={goToRegistration} onSubmit={loginSubmit} />
   } else if (view === 'registration') {
     return <Registration link={goToLogin} onSubmit={registrationSubmit} />
   } else if (view === 'dashboard') {
-    return <Dashboard data={userData} onClick={logout} />
+    return <Dashboard config={config} onClick={logout} />
   }
 }
 

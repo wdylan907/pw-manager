@@ -1,4 +1,4 @@
-const registration = props => {
+const Registration = props => {
   return (
     <>
       <h3>register</h3>
@@ -21,4 +21,4 @@ const registration = props => {
   )
 }
 
-export default registration
+export default Registration
