@@ -2,12 +2,21 @@ import React, { useState, useEffect } from 'react'
 import Dashboard from './views/dashboard'
 import Login from './views/login'
 import Registration from './views/registration'
+import config from './config'
 
-function App(props) {
-  const serverUrl = props.config.serverUrl
-  const axios = props.config.axios
+function App() {
+  const serverUrl = config.serverUrl
+  const axios = config.axios
 
   const [view, setView] = useState('login')
+
+  useEffect(() => {
+    async function getView() {
+      let res = await axios.get(serverUrl)
+      setView(res.data)
+    }
+    getView()
+  }, [])
 
   const loginSubmit = async event => {
     event.preventDefault()
@@ -58,14 +67,6 @@ function App(props) {
   const getUserData = router('get', 'user', console.log)
   const goToLogin = router('get', 'login', setView)
   const goToRegistration = router('get', 'register', setView)
-
-  useEffect(() => {
-    async function getView() {
-      let res = await axios.get(serverUrl)
-      setView(res.data)
-    }
-    getView()
-  }, [])
 
   if (view === 'login') {
     return <Login link={goToRegistration} onSubmit={loginSubmit} />
