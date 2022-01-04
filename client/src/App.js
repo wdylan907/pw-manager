@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import Dashboard from './views/dashboard'
 import Login from './views/login'
 import Registration from './views/registration'
-const config = require('./config')
 
-function App() {
-  config.axiosConfig(axios)
+function App(props) {
+  const serverUrl = props.config.serverUrl
+  const axios = props.config.axios
 
   const [view, setView] = useState('login')
 
@@ -16,7 +15,7 @@ function App() {
       username: event.target.username.value,
       password: event.target.password.value,
     }
-    const res = await axios.post(`${config.server_url}/login`, loginInfo)
+    const res = await axios.post(`${serverUrl}/login`, loginInfo)
     setView(res.data)
   }
 
@@ -27,7 +26,7 @@ function App() {
         username: event.target.username.value,
         password: event.target.password1.value,
       }
-      const res = await axios.post(`${config.server_url}/register`, userInfo)
+      const res = await axios.post(`${serverUrl}/register`, userInfo)
       if (res.data.status === 0) {
         event.target.username.value = ''
         event.target.password1.value = ''
@@ -46,10 +45,10 @@ function App() {
     return async () => {
       let res
       if (method === 'get') {
-        res = await axios.get(`${config.server_url}/${route}`)
+        res = await axios.get(`${serverUrl}/${route}`)
       }
       if (method === 'post') {
-        res = await axios.post(`${config.server_url}/${route}`)
+        res = await axios.post(`${serverUrl}/${route}`)
       }
       callback(res.data)
     }
@@ -62,7 +61,7 @@ function App() {
 
   useEffect(() => {
     async function getView() {
-      let res = await axios.get(config.server_url)
+      let res = await axios.get(serverUrl)
       setView(res.data)
     }
     getView()

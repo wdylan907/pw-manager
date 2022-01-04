@@ -1,7 +1,10 @@
-const server_url = 'http://localhost:5000'
+import axios from 'axios'
 
-const axiosConfig = axios => {
-  axios.defaults.withCredentials = true
+axios.defaults.withCredentials = true
+
+const serverUrl = 'http://localhost:5000'
+
+export default {
+  serverUrl: serverUrl,
+  axios: axios,
 }
-
-module.exports = { server_url, axiosConfig }
