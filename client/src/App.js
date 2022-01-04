@@ -44,7 +44,7 @@ function App() {
 
   const router = (method, route, callback) => {
     return async () => {
-      let res = { data: null }
+      let res
       if (method === 'get') {
         res = await axios.get(`${config.server_url}/${route}`)
       }
