@@ -13,19 +13,19 @@ function App() {
   useEffect(() => {
     async function getData() {
       let res = await axios.get(config.server_url)
-      console.log('useEffect()')
-      console.log(res.data)
       setView(res.data)
     }
     getData()
   }, [])
 
-  const handleLoginClick = async () => {
+  const handleLoginClick = async event => {
+    event.preventDefault()
     console.log('click login')
     const loginInfo = {
-      username: 'user2',
-      password: 'pass',
+      username: event.target.username.value,
+      password: event.target.password.value,
     }
+    console.log(`${config.server_url}/login`)
     const res = await axios.post(`${config.server_url}/login`, loginInfo)
     console.log(res.data)
     setView(res.data)
@@ -38,13 +38,23 @@ function App() {
     setView(res.data)
   }
 
+  const goToRegistration = async () => {
+    const res = await axios.get(`${config.server_url}/register`)
+    setView(res.data)
+  }
+
+  const goToLogin = async () => {
+    const res = await axios.get(`${config.server_url}/login`)
+    setView(res.data)
+  }
+
   if (view === 'login') {
-    return <Login handleClick={handleLoginClick} />
+    return <Login link={goToRegistration} handleClick={handleLoginClick} />
   } else if (view === 'registration') {
-    return <Registration />
+    return <Registration link={goToLogin} />
   } else if (view === 'dashboard') {
     return <Dashboard handleClick={handleLogoutClick} />
-  } else return <></>
+  } else return <Login handleClick={handleLoginClick} />
 }
 
 export default App
