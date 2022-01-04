@@ -50,7 +50,7 @@ function App() {
     }
   }
 
-  const router = (method, route, callback) => {
+  const router = (method, route) => {
     return async () => {
       let res
       if (method === 'get') {
@@ -59,21 +59,28 @@ function App() {
       if (method === 'post') {
         res = await axios.post(`${serverUrl}/${route}`)
       }
-      callback(res.data)
+      setView(res.data)
+      return res.data
     }
   }
 
-  const logout = router('post', 'logout', setView)
-  const getUserData = router('get', 'user', console.log)
-  const goToLogin = router('get', 'login', setView)
-  const goToRegistration = router('get', 'register', setView)
+  const logout = router('post', 'logout')
+  const goToLogin = router('get', 'login')
+  const goToRegistration = router('get', 'register')
+
+  // const getUserData = async () => {
+  //   const res = await axios.get(`${serverUrl}/user`)
+  //   const data = res.data
+  //   console.log('app', data)
+  //   return data
+  // }
 
   if (view === 'login') {
     return <Login link={goToRegistration} onSubmit={loginSubmit} />
   } else if (view === 'registration') {
     return <Registration link={goToLogin} onSubmit={registrationSubmit} />
   } else if (view === 'dashboard') {
-    return <Dashboard data={getUserData} onClick={logout} />
+    return <Dashboard onClick={logout} />
   }
 }
 
