@@ -40,8 +40,7 @@ router.post('/register', async (req, res) => {
   try {
     const existingUser = await User.findOne({ username: req.body.username })
     if (existingUser) {
-      console.log('username in use')
-      return res.redirect('/register')
+      return res.json({ status: 1 })
     }
     const passwordHash = await bcrypt.hash(req.body.password, 10)
     const newUser = new User({
@@ -49,7 +48,7 @@ router.post('/register', async (req, res) => {
       passwordHash,
     })
     await newUser.save()
-    console.log(`user ${newUser.username} registered`)
+    return res.json({ status: 0 })
   } catch (error) {
     console.log(error)
   }

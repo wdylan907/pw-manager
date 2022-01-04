@@ -9,7 +9,7 @@ const Login = props => {
     <>
       <h3>login</h3>
 
-      <form onSubmit={props.handleClick}>
+      <form onSubmit={props.onSubmit}>
         username:
         <input name='username' />
         <br />

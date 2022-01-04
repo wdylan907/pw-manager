@@ -31,6 +31,28 @@ function App() {
     setView(res.data)
   }
 
+  const handleRegistrationClick = async event => {
+    event.preventDefault()
+    if (event.target.password1.value === event.target.password2.value) {
+      const userInfo = {
+        username: event.target.username.value,
+        password: event.target.password1.value,
+      }
+      const res = await axios.post(`${config.server_url}/register`, userInfo)
+      if (res.data.status === 0) {
+        event.target.username.value = ''
+        event.target.password1.value = ''
+        event.target.password2.value = ''
+        console.log('success')
+        setView('login')
+      } else if (res.data.status === 1) {
+        console.log('username already in use')
+      }
+    } else {
+      console.log('passwords do not match')
+    }
+  }
+
   const handleLogoutClick = async () => {
     console.log('click logout')
     const res = await axios.post(`${config.server_url}/logout`)
@@ -49,9 +71,9 @@ function App() {
   }
 
   if (view === 'login') {
-    return <Login link={goToRegistration} handleClick={handleLoginClick} />
+    return <Login link={goToRegistration} onSubmit={handleLoginClick} />
   } else if (view === 'registration') {
-    return <Registration link={goToLogin} />
+    return <Registration link={goToLogin} onSubmit={handleRegistrationClick} />
   } else if (view === 'dashboard') {
     return <Dashboard handleClick={handleLogoutClick} />
   } else return <Login handleClick={handleLoginClick} />
