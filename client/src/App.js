@@ -15,7 +15,7 @@ function App() {
       setView(res.data)
     }
     getView()
-  }, [])
+  }, [axios, serverUrl])
 
   const loginSubmit = async event => {
     event.preventDefault()

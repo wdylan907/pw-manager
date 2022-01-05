@@ -12,7 +12,7 @@ const Dashboard = props => {
       console.log(obj.data)
     }
     getData()
-  }, [])
+  }, [axios, serverUrl])
 
   if (userData) {
     return (
