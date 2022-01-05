@@ -77,7 +77,13 @@ router.get('/user/', isAuth, async (req, res) => {
 router.post('/entry', isAuth, async (req, res) => {
   try {
     const user = await User.findOne({ username: req.session.username })
-    user.vault.push({ label: req.body.label })
+    const newEntry = {
+      label: req.body.label,
+      username: req.body.username,
+      password: req.body.password,
+    }
+    console.log(newEntry)
+    user.vault.push(newEntry)
     await user.save()
     console.log(`entry for ${req.body.label} added`)
     res.json(user)
