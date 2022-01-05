@@ -16,6 +16,12 @@ const Dashboard = props => {
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
 
+  const updateEntry = event => {
+    console.log(event.target.attributes.entryid.nodeValue)
+    const entryId = event.target.attributes.entryid.nodeValue
+  }
+  const deleteEntry = () => {}
+
   useEffect(() => {
     async function getVault() {
       const obj = await axios.get(`${serverUrl}/user`)
@@ -56,6 +62,9 @@ const Dashboard = props => {
                         <p>{entry.username}</p>
                         <p>{entry.password}</p>
                         <Button>delete</Button>
+                        <Button entryid={entry.id} onClick={updateEntry}>
+                          edit
+                        </Button>
                       </Accordion.Body>
                     </Accordion.Item>
                   )

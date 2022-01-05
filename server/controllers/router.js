@@ -105,4 +105,19 @@ router.post('/entry/:id', isAuth, async (req, res) => {
   }
 })
 
+router.delete('/entry/:id', isAuth, async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.session.username })
+    const newVault = user.vault.filter(entry => {
+      return entry.id !== req.body.id
+    })
+    user.vault = newVault
+    await user.save()
+    console.log(user)
+    res.json(user)
+  } catch (error) {
+    console.log(error)
+  }
+})
+
 module.exports = router
