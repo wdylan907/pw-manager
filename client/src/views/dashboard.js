@@ -21,7 +21,7 @@ const Dashboard = props => {
       const obj = await axios.get(`${serverUrl}/user`)
       setVault(obj.data.vault)
     }
-    getVault
+    getVault()
   }, [axios, serverUrl])
 
   if (vault) {

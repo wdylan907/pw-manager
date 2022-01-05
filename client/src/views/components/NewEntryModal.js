@@ -14,9 +14,12 @@ const NewEntryModal = props => {
       username: event.target.elements[1].value,
       password: event.target.elements[2].value,
     }
-    await axios.post(`${serverUrl}/entry`, newEntry)
+    const res = await axios.post(`${serverUrl}/entry`, newEntry)
+    console.log(res)
     props.handleClose()
+    newEntry.id = res.data.vault[res.data.vault.length - 1].id
     const newVault = props.vault.concat([newEntry])
+    console.log(newVault)
     props.setVault(newVault)
   }
 
