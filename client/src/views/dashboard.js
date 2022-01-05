@@ -7,14 +7,19 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Accordion from 'react-bootstrap/Accordion'
 import NewEntryModal from './components/NewEntryModal'
+import UpdateEntryModal from './components/UpdateEntryModal'
 
 const Dashboard = props => {
   const { serverUrl, axios } = props.config
   const [vault, setVault] = useState([])
   const [showCreate, setShowCreate] = useState(false)
+  const [showUpdate, setShowUpdate] = useState(false)
 
   const handleCloseCreate = () => setShowCreate(false)
   const handleShowCreate = () => setShowCreate(true)
+
+  const handleCloseUpdate = () => setShowUpdate(false)
+  const handleShowUpdate = () => setShowUpdate(true)
 
   const updateEntry = event => {
     console.log(event.target.attributes.entryid.nodeValue)
@@ -76,9 +81,18 @@ const Dashboard = props => {
                         <Button entryid={entry._id} onClick={deleteEntry}>
                           delete
                         </Button>
-                        <Button entryid={entry._id} onClick={updateEntry}>
+                        <Button entryid={entry._id} onClick={handleShowUpdate}>
                           edit
                         </Button>
+                        <UpdateEntryModal
+                          show={showUpdate}
+                          handleClose={handleCloseUpdate}
+                          vault={vault}
+                          setVault={setVault}
+                          id={entry._id}
+                          label={entry.label}
+                          username={entry.username}
+                        />
                       </Accordion.Body>
                     </Accordion.Item>
                   )
