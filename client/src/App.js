@@ -6,7 +6,6 @@ import config from './config'
 
 function App() {
   const { serverUrl, axios } = config
-
   const [view, setView] = useState('login')
 
   useEffect(() => {
@@ -16,20 +15,6 @@ function App() {
     }
     getView()
   }, [axios, serverUrl])
-
-  const loginSubmit = async event => {
-    event.preventDefault()
-    const loginInfo = {
-      username: event.target.elements[0].value,
-      password: event.target.elements[1].value,
-    }
-    const res = await axios.post(`${serverUrl}/login`, loginInfo)
-    if (res.data.status === 0) {
-      setView('dashboard')
-    } else {
-      console.log('invalid login')
-    }
-  }
 
   const registrationSubmit = async event => {
     event.preventDefault()
@@ -69,10 +54,9 @@ function App() {
 
   const logout = router('post', 'logout')
   const goToLogin = router('get', 'login')
-  const goToRegistration = router('get', 'register')
 
   if (view === 'login') {
-    return <Login link={goToRegistration} onSubmit={loginSubmit} />
+    return <Login serverUrl={serverUrl} axios={axios} setView={setView} />
   } else if (view === 'registration') {
     return <Registration link={goToLogin} onSubmit={registrationSubmit} />
   } else if (view === 'dashboard') {

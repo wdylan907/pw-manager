@@ -6,6 +6,27 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
 const Login = props => {
+  const { axios, setView, serverUrl } = props
+
+  const loginSubmit = async event => {
+    event.preventDefault()
+    const loginInfo = {
+      username: event.target.elements[0].value,
+      password: event.target.elements[1].value,
+    }
+    const res = await axios.post(`${serverUrl}/login`, loginInfo)
+    if (res.data.status === 0) {
+      setView('dashboard')
+    } else {
+      console.log('invalid login')
+    }
+  }
+
+  const goToRegistration = async () => {
+    const res = await axios.get(`${serverUrl}/register`)
+    setView(res.data)
+  }
+
   return (
     <div>
       <Row>
@@ -20,7 +41,7 @@ const Login = props => {
             className='pt-3 pb-3'
             style={{ border: '5px solid #cecece' }}
           >
-            <Form onSubmit={props.onSubmit}>
+            <Form onSubmit={loginSubmit}>
               <Form.Group className='mb-3' controlId='formBasicEmail'>
                 <Form.Control type='text' placeholder='username' />
               </Form.Group>
@@ -33,7 +54,7 @@ const Login = props => {
               <Button variant='primary' type='submit'>
                 Submit
               </Button>
-              <Button variant='primary' onClick={props.link}>
+              <Button variant='primary' onClick={goToRegistration}>
                 register
               </Button>
             </Form>
