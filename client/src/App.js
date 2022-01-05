@@ -39,7 +39,7 @@ function App() {
       <Registration serverUrl={serverUrl} axios={axios} setView={setView} />
     )
   } else if (view === 'dashboard') {
-    return <Dashboard config={config} onClick={logout} />
+    return <Dashboard serverUrl={serverUrl} axios={axios} setView={setView} />
   }
 }
 

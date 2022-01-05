@@ -10,7 +10,7 @@ import NewEntryModal from './components/NewEntryModal'
 import UpdateEntryModal from './components/UpdateEntryModal'
 
 const Dashboard = props => {
-  const { serverUrl, axios } = props.config
+  const { serverUrl, axios, setView } = props
   const [vault, setVault] = useState([])
   const [showCreate, setShowCreate] = useState(false)
   const [showUpdate, setShowUpdate] = useState(false)
@@ -39,6 +39,11 @@ const Dashboard = props => {
     setVault(newVault)
   }
 
+  const logout = async () => {
+    const res = await axios.post(`${serverUrl}/logout`)
+    setView(res.data)
+  }
+
   useEffect(() => {
     async function getVault() {
       const obj = await axios.get(`${serverUrl}/user`)
@@ -53,7 +58,7 @@ const Dashboard = props => {
         <Row>
           <Container className='pt-5 pb-2 col-6 align-self-center'>
             <h1>Dashboard</h1>
-            <Button onClick={props.onClick}>Log out</Button>
+            <Button onClick={logout}>Log out</Button>
             <Button onClick={handleShowCreate}>new entry</Button>
             <NewEntryModal
               show={showCreate}
