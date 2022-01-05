@@ -10,7 +10,7 @@ import NewEntryModal from './components/NewEntryModal'
 import UpdateEntryModal from './components/UpdateEntryModal'
 
 const Dashboard = props => {
-  const { serverUrl, axios, setView } = props
+  const { axios, setView, serverUrl } = props.config
   const [vault, setVault] = useState([])
   const [showCreate, setShowCreate] = useState(false)
   const [showUpdate, setShowUpdate] = useState(false)

@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
 const Registration = props => {
-  const { axios, setView, serverUrl } = props
+  const { axios, setView, serverUrl } = props.config
 
   const registrationSubmit = async event => {
     event.preventDefault()
