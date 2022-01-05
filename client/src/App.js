@@ -33,16 +33,16 @@ function App() {
 
   const registrationSubmit = async event => {
     event.preventDefault()
-    if (event.target.password1.value === event.target.password2.value) {
+    if (event.target.elements[1].value === event.target.elements[2].value) {
       const userInfo = {
-        username: event.target.username.value,
-        password: event.target.password1.value,
+        username: event.target.elements[0].value,
+        password: event.target.elements[1].value,
       }
       const res = await axios.post(`${serverUrl}/register`, userInfo)
       if (res.data.status === 0) {
-        event.target.username.value = ''
-        event.target.password1.value = ''
-        event.target.password2.value = ''
+        event.target.elements[0].value = ''
+        event.target.elements[1].value = ''
+        event.target.elements[2].value = ''
         console.log('success')
         setView('login')
       } else if (res.data.status === 1) {
