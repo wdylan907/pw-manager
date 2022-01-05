@@ -7,10 +7,16 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Accordion from 'react-bootstrap/Accordion'
+import Modal from 'react-bootstrap/Modal'
+import NewEntryModal from './components/NewEntryModal'
 
 const Dashboard = props => {
   const { serverUrl, axios } = props.config
   const [userData, setUserData] = useState('')
+  const [show, setShow] = useState(false)
+
+  const handleClose = () => setShow(false)
+  const handleShow = () => setShow(true)
 
   useEffect(() => {
     async function getData() {
@@ -27,6 +33,9 @@ const Dashboard = props => {
         <Row>
           <Container className='pt-5 pb-2 col-6 align-self-center'>
             <h1>Dashboard</h1>
+            <Button onClick={props.onClick}>Log out</Button>
+            <Button onClick={handleShow}>new entry</Button>
+            <NewEntryModal show={show} handleClose={handleClose} />
           </Container>
         </Row>
         <Row className='pt-4 pb-3'>
@@ -41,7 +50,11 @@ const Dashboard = props => {
                   return (
                     <Accordion.Item key={entry.id} eventKey={entry.id}>
                       <Accordion.Header>{entry.label}</Accordion.Header>
-                      <Accordion.Body>body</Accordion.Body>
+                      <Accordion.Body>
+                        <p>{entry.username}</p>
+                        <p>{entry.password}</p>
+                        <Button>delete</Button>
+                      </Accordion.Body>
                     </Accordion.Item>
                   )
                 })}
