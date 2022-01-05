@@ -20,7 +20,14 @@ const Dashboard = props => {
     console.log(event.target.attributes.entryid.nodeValue)
     const entryId = event.target.attributes.entryid.nodeValue
   }
-  const deleteEntry = () => {}
+  const deleteEntry = async event => {
+    const entryId = event.target.attributes.entryid.nodeValue
+    await axios.delete(`${serverUrl}/entry/${entryId}`)
+    const newVault = vault.filter(entry => {
+      return entry.id !== entryId
+    })
+    setVault(newVault)
+  }
 
   useEffect(() => {
     async function getVault() {
@@ -61,7 +68,9 @@ const Dashboard = props => {
                       <Accordion.Body>
                         <p>{entry.username}</p>
                         <p>{entry.password}</p>
-                        <Button>delete</Button>
+                        <Button entryid={entry.id} onClick={deleteEntry}>
+                          delete
+                        </Button>
                         <Button entryid={entry.id} onClick={updateEntry}>
                           edit
                         </Button>
