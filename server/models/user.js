@@ -9,11 +9,11 @@ const mongoose = require('mongoose')
 //   },
 // })
 
-const entrySchema = new mongoose.Schema({
-  label: { type: String, required: true },
-  username: String,
-  password: { type: String, required: true },
-})
+// const entrySchema = new mongoose.Schema({
+//   label: { type: String, required: true },
+//   username: String,
+//   password: { type: String, required: true },
+// })
 
 const schema = new mongoose.Schema({
   username: {
@@ -25,7 +25,13 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  vault: [entrySchema],
+  vault: [
+    {
+      label: { type: String, required: true },
+      username: String,
+      password: { type: String, required: true },
+    },
+  ],
 })
 
 schema.set('toJSON', {
@@ -37,12 +43,12 @@ schema.set('toJSON', {
   },
 })
 
-entrySchema.set('toJSON', {
-  transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString()
-    delete returnedObject._id
-    delete returnedObject.__v
-  },
-})
+// entrySchema.set('toJSON', {
+//   transform: (document, returnedObject) => {
+//     returnedObject.id = returnedObject._id.toString()
+//     delete returnedObject._id
+//     delete returnedObject.__v
+//   },
+// })
 
 module.exports = mongoose.model('User', schema)

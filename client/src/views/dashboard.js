@@ -11,20 +11,25 @@ import NewEntryModal from './components/NewEntryModal'
 const Dashboard = props => {
   const { serverUrl, axios } = props.config
   const [vault, setVault] = useState([])
-  const [show, setShow] = useState(false)
+  const [showCreate, setShowCreate] = useState(false)
 
-  const handleClose = () => setShow(false)
-  const handleShow = () => setShow(true)
+  const handleCloseCreate = () => setShowCreate(false)
+  const handleShowCreate = () => setShowCreate(true)
 
   const updateEntry = event => {
     console.log(event.target.attributes.entryid.nodeValue)
     const entryId = event.target.attributes.entryid.nodeValue
   }
+
   const deleteEntry = async event => {
     const entryId = event.target.attributes.entryid.nodeValue
-    await axios.delete(`${serverUrl}/entry/${entryId}`)
+    console.log(entryId)
+    console.log(typeof entryId)
+    const res = await axios.delete(`${serverUrl}/delete-entry`, {
+      data: { id: entryId },
+    })
     const newVault = vault.filter(entry => {
-      return entry.id !== entryId
+      return entry._id !== entryId
     })
     setVault(newVault)
   }
@@ -44,10 +49,10 @@ const Dashboard = props => {
           <Container className='pt-5 pb-2 col-6 align-self-center'>
             <h1>Dashboard</h1>
             <Button onClick={props.onClick}>Log out</Button>
-            <Button onClick={handleShow}>new entry</Button>
+            <Button onClick={handleShowCreate}>new entry</Button>
             <NewEntryModal
-              show={show}
-              handleClose={handleClose}
+              show={showCreate}
+              handleClose={handleCloseCreate}
               vault={vault}
               setVault={setVault}
             />
@@ -63,15 +68,15 @@ const Dashboard = props => {
               <Accordion>
                 {vault.map(entry => {
                   return (
-                    <Accordion.Item key={entry.id} eventKey={entry.id}>
+                    <Accordion.Item key={entry._id} eventKey={entry._id}>
                       <Accordion.Header>{entry.label}</Accordion.Header>
                       <Accordion.Body>
                         <p>{entry.username}</p>
                         <p>{entry.password}</p>
-                        <Button entryid={entry.id} onClick={deleteEntry}>
+                        <Button entryid={entry._id} onClick={deleteEntry}>
                           delete
                         </Button>
-                        <Button entryid={entry.id} onClick={updateEntry}>
+                        <Button entryid={entry._id} onClick={updateEntry}>
                           edit
                         </Button>
                       </Accordion.Body>

@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import Form from 'react-bootstrap/Form'
 import config from '../../config'
+import mongoose from 'mongoose'
 
 const NewEntryModal = props => {
   const { serverUrl, axios } = config
@@ -11,16 +12,13 @@ const NewEntryModal = props => {
     event.preventDefault()
     const newEntry = {
       label: event.target.elements[0].value,
-      username: event.target.elements[1].value,
+      username: event.target.elements[1].value || null,
       password: event.target.elements[2].value,
     }
     const res = await axios.post(`${serverUrl}/entry`, newEntry)
-    console.log(res)
     props.handleClose()
-    newEntry.id = res.data.vault[res.data.vault.length - 1].id
-    const newVault = props.vault.concat([newEntry])
-    console.log(newVault)
-    props.setVault(newVault)
+    const newData = await axios.get(`${serverUrl}/user`)
+    props.setVault(newData.data.vault)
   }
 
   return (
