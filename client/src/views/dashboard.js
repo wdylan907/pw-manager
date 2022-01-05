@@ -14,12 +14,19 @@ const Dashboard = props => {
   const [vault, setVault] = useState([])
   const [showCreate, setShowCreate] = useState(false)
   const [showUpdate, setShowUpdate] = useState(false)
+  const [updateId, setUpdateId] = useState('')
 
   const handleCloseCreate = () => setShowCreate(false)
   const handleShowCreate = () => setShowCreate(true)
 
   const handleCloseUpdate = () => setShowUpdate(false)
-  const handleShowUpdate = () => setShowUpdate(true)
+  //const handleShowUpdate = () => setShowUpdate(true)
+
+  const handleShowUpdate = event => {
+    console.log(event.target.attributes.entryid.nodeValue)
+    setUpdateId(event.target.attributes.entryid.nodeValue)
+    setShowUpdate(true)
+  }
 
   const updateEntry = event => {
     console.log(event.target.attributes.entryid.nodeValue)
@@ -89,9 +96,7 @@ const Dashboard = props => {
                           handleClose={handleCloseUpdate}
                           vault={vault}
                           setVault={setVault}
-                          id={entry._id}
-                          label={entry.label}
-                          username={entry.username}
+                          id={updateId}
                         />
                       </Accordion.Body>
                     </Accordion.Item>

@@ -92,11 +92,22 @@ router.post('/entry', isAuth, async (req, res) => {
   }
 })
 
-router.post('/entry/:id', isAuth, async (req, res) => {
+router.post('/update-entry', isAuth, async (req, res) => {
   try {
     const user = await User.findOne({ username: req.session.username })
-    const entry = user.vault.id(req.body.id)
-    entry.fields.set(req.body.fieldLabel, req.body.fieldContent)
+    const entries = user.vault.filter(entry => {
+      console.log(entry._id.toString())
+      console.log(req.body.id)
+      console.log(entry._id.toString() !== req.body.id)
+      return entry._id.toString() !== req.body.id
+    })
+    newEntry = {
+      label: req.body.label,
+      username: req.body.username,
+      password: req.body.password,
+    }
+    entries.push(newEntry)
+    user.vault = entries
     await user.save()
     console.log(user)
     res.json(user)

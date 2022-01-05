@@ -7,22 +7,20 @@ import config from '../../config'
 const NewEntryModal = props => {
   const { serverUrl, axios } = config
 
-  //   const saveEntry = async event => {
-  //     event.preventDefault()
-  //     const newEntry = {
-  //       label: event.target.elements[0].value,
-  //       username: event.target.elements[1].value || null,
-  //       password: event.target.elements[2].value,
-  //     }
-  //     await axios.post(`${serverUrl}/entry`, newEntry)
-  //     props.handleClose()
-  //     const newData = await axios.get(`${serverUrl}/user`)
-  //     props.setVault(newData.data.vault)
-  //   }
-
-  const saveEntry = event => {
+  const saveEntry = async event => {
     event.preventDefault()
-    console.log(props.id)
+    const id = props.id
+    console.log(id)
+    const updatedEntry = {
+      id,
+      label: event.target.elements[0].value,
+      username: event.target.elements[1].value,
+      password: event.target.elements[2].value,
+    }
+    await axios.post(`${serverUrl}/update-entry`, updatedEntry)
+    props.handleClose()
+    const newData = await axios.get(`${serverUrl}/user`)
+    props.setVault(newData.data.vault)
   }
 
   return (
@@ -38,13 +36,10 @@ const NewEntryModal = props => {
       <Modal.Body>
         <Form onSubmit={saveEntry}>
           <Form.Group className='mb-3' controlId='formBasicEmail'>
-            <Form.Control type='text' placeholder={props.label} />
+            <Form.Control type='text' placeholder='label' />
           </Form.Group>
           <Form.Group className='mb-3' controlId='formBasicEmail'>
-            <Form.Control
-              type='text'
-              placeholder={props.username || 'username (optional)'}
-            />
+            <Form.Control type='text' placeholder={'username (optional)'} />
           </Form.Group>
           <Form.Group className='mb-3' controlId='formBasicPassword'>
             <Form.Control type='password' placeholder='new password' />
