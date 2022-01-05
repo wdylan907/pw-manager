@@ -1,28 +1,3 @@
-// const Registration = props => {
-//   return (
-//     <>
-//       <h3>register</h3>
-//       <form onSubmit={props.onSubmit}>
-//         username:
-//         <input name='username' />
-//         <br />
-//         password:
-//         <input name='password1' type='password' />
-//         <br />
-//         repeat password:
-//         <input name='password2' type='password' />
-//         <br />
-//         <button type='submit'>submit</button>
-//       </form>
-//       <br />
-//       <br />
-//       <button onClick={props.link}>login</button>
-//     </>
-//   )
-// }
-
-// export default Registration
-
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
@@ -31,6 +6,35 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
 const Registration = props => {
+  const { axios, setView, serverUrl } = props
+
+  const registrationSubmit = async event => {
+    event.preventDefault()
+    if (event.target.elements[1].value === event.target.elements[2].value) {
+      const userInfo = {
+        username: event.target.elements[0].value,
+        password: event.target.elements[1].value,
+      }
+      const res = await axios.post(`${serverUrl}/register`, userInfo)
+      if (res.data.status === 0) {
+        event.target.elements[0].value = ''
+        event.target.elements[1].value = ''
+        event.target.elements[2].value = ''
+        console.log('success')
+        setView('login')
+      } else if (res.data.status === 1) {
+        console.log('username already in use')
+      }
+    } else {
+      console.log('passwords do not match')
+    }
+  }
+
+  const goToLogin = async () => {
+    const res = await axios.get(`${serverUrl}/login`)
+    setView(res.data)
+  }
+
   return (
     <div>
       <Row>
@@ -45,7 +49,7 @@ const Registration = props => {
             className='pt-3 pb-3'
             style={{ border: '5px solid #cecece' }}
           >
-            <Form onSubmit={props.onSubmit}>
+            <Form onSubmit={registrationSubmit}>
               <Form.Group className='mb-3' controlId='formBasicEmail'>
                 <Form.Control type='text' placeholder='username' />
               </Form.Group>
@@ -61,7 +65,7 @@ const Registration = props => {
               <Button variant='primary' type='submit'>
                 Submit
               </Button>
-              <Button variant='primary' onClick={props.link}>
+              <Button variant='primary' onClick={goToLogin}>
                 Login
               </Button>
             </Form>
