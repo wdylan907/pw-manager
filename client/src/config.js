@@ -4,7 +4,9 @@ axios.defaults.withCredentials = true
 
 const serverUrl = 'http://localhost:5000'
 
-export default {
+const config = {
   serverUrl: serverUrl,
   axios: axios,
 }
+
+export default config

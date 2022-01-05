@@ -20,8 +20,8 @@ function App() {
   const loginSubmit = async event => {
     event.preventDefault()
     const loginInfo = {
-      username: event.target.username.value,
-      password: event.target.password.value,
+      username: event.target.elements[0].value,
+      password: event.target.elements[1].value,
     }
     const res = await axios.post(`${serverUrl}/login`, loginInfo)
     if (res.data.status === 0) {
