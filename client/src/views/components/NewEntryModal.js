@@ -14,8 +14,10 @@ const NewEntryModal = props => {
       username: event.target.elements[1].value,
       password: event.target.elements[2].value,
     }
-    const response = await axios.post(`${serverUrl}/entry`, newEntry)
+    await axios.post(`${serverUrl}/entry`, newEntry)
     props.handleClose()
+    const newVault = props.vault.concat([newEntry])
+    props.setVault(newVault)
   }
 
   return (

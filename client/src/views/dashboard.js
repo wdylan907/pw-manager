@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import Entry from './components/Entry'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Button from 'react-bootstrap/Button'
@@ -7,27 +6,25 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Accordion from 'react-bootstrap/Accordion'
-import Modal from 'react-bootstrap/Modal'
 import NewEntryModal from './components/NewEntryModal'
 
 const Dashboard = props => {
   const { serverUrl, axios } = props.config
-  const [userData, setUserData] = useState('')
+  const [vault, setVault] = useState([])
   const [show, setShow] = useState(false)
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
 
   useEffect(() => {
-    async function getData() {
+    async function getVault() {
       const obj = await axios.get(`${serverUrl}/user`)
-      setUserData(obj.data)
-      console.log(obj.data)
+      setVault(obj.data.vault)
     }
-    getData()
+    getVault
   }, [axios, serverUrl])
 
-  if (userData) {
+  if (vault) {
     return (
       <div>
         <Row>
@@ -35,7 +32,12 @@ const Dashboard = props => {
             <h1>Dashboard</h1>
             <Button onClick={props.onClick}>Log out</Button>
             <Button onClick={handleShow}>new entry</Button>
-            <NewEntryModal show={show} handleClose={handleClose} />
+            <NewEntryModal
+              show={show}
+              handleClose={handleClose}
+              vault={vault}
+              setVault={setVault}
+            />
           </Container>
         </Row>
         <Row className='pt-4 pb-3'>
@@ -46,7 +48,7 @@ const Dashboard = props => {
               style={{ border: '5px solid #cecece' }}
             >
               <Accordion>
-                {userData.vault.map(entry => {
+                {vault.map(entry => {
                   return (
                     <Accordion.Item key={entry.id} eventKey={entry.id}>
                       <Accordion.Header>{entry.label}</Accordion.Header>
