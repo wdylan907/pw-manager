@@ -20,24 +20,17 @@ const Dashboard = props => {
   const handleShowCreate = () => setShowCreate(true)
 
   const handleCloseUpdate = () => setShowUpdate(false)
-  //const handleShowUpdate = () => setShowUpdate(true)
 
   const handleShowUpdate = event => {
-    console.log(event.target.attributes.entryid.nodeValue)
     setUpdateId(event.target.attributes.entryid.nodeValue)
     setShowUpdate(true)
-  }
-
-  const updateEntry = event => {
-    console.log(event.target.attributes.entryid.nodeValue)
-    const entryId = event.target.attributes.entryid.nodeValue
   }
 
   const deleteEntry = async event => {
     const entryId = event.target.attributes.entryid.nodeValue
     console.log(entryId)
     console.log(typeof entryId)
-    const res = await axios.delete(`${serverUrl}/delete-entry`, {
+    await axios.delete(`${serverUrl}/delete-entry`, {
       data: { id: entryId },
     })
     const newVault = vault.filter(entry => {
