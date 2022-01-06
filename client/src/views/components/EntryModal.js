@@ -77,14 +77,24 @@ const EntryModal = props => {
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={onSubmit}>
-          <Form.Group className='mb-3' controlId='formBasicEmail'>
-            <Form.Control type='text' placeholder='label' />
+          <Form.Group className='mb-3' controlId='formBasicText'>
+            <Form.Control
+              type='text'
+              placeholder={props.selectedData.label || 'label'}
+            />
           </Form.Group>
-          <Form.Group className='mb-3' controlId='formBasicEmail'>
-            <Form.Control type='text' placeholder={'username (optional)'} />
+          <Form.Group className='mb-3' controlId='formBasicText'>
+            <Form.Control
+              type='text'
+              placeholder={props.selectedData.username || 'username (optional)'}
+            />
           </Form.Group>
           <Form.Group className='mb-3' controlId='formBasicPassword'>
-            <Form.Control type='password' placeholder='new password' />
+            <Form.Control
+              type='password'
+              placeholder={'password'}
+              defaultValue={props.selectedData.password || null}
+            />
           </Form.Group>
           <Button variant='primary' type='submit'>
             Save

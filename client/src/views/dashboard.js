@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col'
 import Accordion from 'react-bootstrap/Accordion'
 import EntryModal from './components/EntryModal'
 import CryptoJS from 'crypto-js'
+import Form from 'react-bootstrap/Form'
 
 const Dashboard = props => {
   //console.log('rendering twice?')
@@ -17,13 +18,21 @@ const Dashboard = props => {
   const [showCreate, setShowCreate] = useState(false)
   const [showUpdate, setShowUpdate] = useState(false)
   const [updateId, setUpdateId] = useState('')
+  const [selectedData, setSelectedData] = useState({})
 
   const handleCloseCreate = () => setShowCreate(false)
-  const handleShowCreate = () => setShowCreate(true)
+  const handleShowCreate = () => {
+    setSelectedData({})
+    setShowCreate(true)
+  }
 
   const handleCloseUpdate = () => setShowUpdate(false)
 
   const handleShowUpdate = event => {
+    const data = vault.filter(entry => {
+      return entry._id === event.target.attributes.entryid.nodeValue
+    })
+    setSelectedData(data[0])
     setUpdateId(event.target.attributes.entryid.nodeValue)
     setShowUpdate(true)
   }
@@ -97,6 +106,7 @@ const Dashboard = props => {
               setAlert={setAlert}
               title={'New Entry'}
               function={'new'}
+              selectedData={selectedData}
             />
           </Container>
         </Row>
@@ -143,6 +153,7 @@ const Dashboard = props => {
                           setAlert={setAlert}
                           title={'Update Entry'}
                           function={'update'}
+                          selectedData={selectedData}
                         />
                       </Accordion.Body>
                     </Accordion.Item>
