@@ -12,13 +12,28 @@ const NewEntryModal = props => {
     event.preventDefault()
     const id = props.id
     console.log(id)
-    const updatedEntry = {
+    const updatedEntryPlain = {
       id,
       label: event.target.elements[0].value,
-      username: event.target.elements[1].value || null,
-      password: event.target.elements[2].value || null,
+      username: event.target.elements[1].value,
+      password: event.target.elements[2].value,
     }
-    await axios.post(`${serverUrl}/update-entry`, updatedEntry)
+    const updatedEntryEncrypted = {
+      id,
+      label: CryptoJS.AES.encrypt(
+        updatedEntryPlain.label,
+        props.encryptionKey
+      ).toString(),
+      username: CryptoJS.AES.encrypt(
+        updatedEntryPlain.username,
+        props.encryptionKey
+      ).toString(),
+      password: CryptoJS.AES.encrypt(
+        updatedEntryPlain.password,
+        props.encryptionKey
+      ).toString(),
+    }
+    await axios.post(`${serverUrl}/update-entry`, updatedEntryEncrypted)
     props.handleClose()
     const newData = await axios.get(`${serverUrl}/user`)
     props.setVault(newData.data.vault)
