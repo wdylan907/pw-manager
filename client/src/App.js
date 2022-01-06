@@ -8,7 +8,7 @@ function App() {
   const { serverUrl, axios } = config
   const [view, setView] = useState('login')
   const [encryptionKey, setEncryptionKey] = useState('')
-  const [alert, setAlert] = useState('')
+  const [alert, setAlert] = useState(null)
 
   const viewConfig = {
     axios,
