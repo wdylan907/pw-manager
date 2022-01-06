@@ -52,14 +52,15 @@ const Login = props => {
               <Form.Group className='mb-3' controlId='formBasicPassword'>
                 <Form.Control type='password' placeholder='password' />
               </Form.Group>
-              <Form.Group className='mb-3' controlId='formBasicCheckbox'>
-                <Form.Check type='checkbox' label='Check me out' />
-              </Form.Group>
               <Button variant='primary' type='submit'>
-                Submit
+                Log In
               </Button>
-              <Button variant='primary' onClick={goToRegistration}>
-                register
+              <Button
+                variant='primary'
+                onClick={goToRegistration}
+                className='float-end'
+              >
+                Register
               </Button>
             </Form>
           </Container>

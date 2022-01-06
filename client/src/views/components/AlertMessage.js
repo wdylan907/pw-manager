@@ -19,8 +19,12 @@ const AlertMessage = props => {
       variant: 'danger',
       message: 'invalid username or password',
     },
+    {
+      variant: 'danger',
+      message: 'label is required',
+    },
   ]
-  if (props.alert !== null) {
+  if (typeof props.alert === 'number') {
     return (
       <Alert variant={alerts[props.alert].variant}>
         <p>{alerts[props.alert].message}</p>

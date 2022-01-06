@@ -4,34 +4,9 @@ import Modal from 'react-bootstrap/Modal'
 import Form from 'react-bootstrap/Form'
 import config from '../../config'
 import cryptography from '../../cryptography'
-import AlertMessage from './AlertMessage'
 
-const NewEntryModal = props => {
+const EntryModal = props => {
   const { serverUrl, axios } = config
-
-  const saveEntry = async event => {
-    event.preventDefault()
-    const id = props.id
-    console.log(id)
-    const updatedEntryPlain = {
-      id,
-      label: event.target.elements[0].value,
-      username: event.target.elements[1].value,
-      password: event.target.elements[2].value,
-    }
-    const updatedEntryEncrypted = cryptography.encryptUpdatedEntry(
-      updatedEntryPlain,
-      props.encryptionKey
-    )
-    await axios.post(`${serverUrl}/update-entry`, updatedEntryEncrypted)
-    props.handleClose()
-    const newDataEncrypted = await axios.get(`${serverUrl}/user`)
-    const newDataPlain = cryptography.decryptVault(
-      newDataEncrypted.data.vault,
-      props.encryptionKey
-    )
-    props.setVault(newDataPlain)
-  }
 
   return (
     <Modal
@@ -41,7 +16,7 @@ const NewEntryModal = props => {
       keyboard={false}
     >
       <Modal.Header closeButton>
-        <Modal.Title>Update Entry</Modal.Title>
+        <Modal.Title>{props.title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={saveEntry}>
@@ -64,4 +39,4 @@ const NewEntryModal = props => {
   )
 }
 
-export default NewEntryModal
+export default EntryModal

@@ -4,12 +4,18 @@ import Modal from 'react-bootstrap/Modal'
 import Form from 'react-bootstrap/Form'
 import config from '../../config'
 import cryptography from '../../cryptography'
+import AlertMessage from './AlertMessage'
 
 const NewEntryModal = props => {
   const { serverUrl, axios } = config
 
   const saveEntry = async event => {
     event.preventDefault()
+    if (event.target.elements[0].value === '') {
+      console.log('alert')
+      props.setAlert(4)
+      return
+    }
     const newEntryPlain = {
       label: event.target.elements[0].value,
       username: event.target.elements[1].value,
@@ -49,9 +55,6 @@ const NewEntryModal = props => {
           </Form.Group>
           <Form.Group className='mb-3' controlId='formBasicPassword'>
             <Form.Control type='password' placeholder='password' />
-          </Form.Group>
-          <Form.Group className='mb-3' controlId='formBasicCheckbox'>
-            <Form.Check type='checkbox' label='Check me out' />
           </Form.Group>
           <Button variant='primary' type='submit'>
             Save

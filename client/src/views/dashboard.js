@@ -13,7 +13,7 @@ const Dashboard = props => {
   //console.log('rendering twice?')
   const encryptionKey = props.encryptionKey
 
-  const { axios, setView, serverUrl } = props.config
+  const { axios, setView, serverUrl, alert, setAlert } = props.config
   const [vault, setVault] = useState([])
   const [showCreate, setShowCreate] = useState(false)
   const [showUpdate, setShowUpdate] = useState(false)
@@ -44,6 +44,7 @@ const Dashboard = props => {
 
   const logout = async () => {
     const res = await axios.post(`${serverUrl}/logout`)
+    setAlert(null)
     setView(res.data)
   }
 
@@ -80,15 +81,21 @@ const Dashboard = props => {
       <div>
         <Row>
           <Container className='pt-5 pb-2 col-6 align-self-center'>
-            <h1>Dashboard</h1>
-            <Button onClick={logout}>Log out</Button>
-            <Button onClick={handleShowCreate}>new entry</Button>
+            <br />
+            <Button size='sm' onClick={handleShowCreate}>
+              New Entry
+            </Button>
+            <Button size='sm' onClick={logout} className='float-end'>
+              Log Out
+            </Button>
             <NewEntryModal
               show={showCreate}
               handleClose={handleCloseCreate}
               vault={vault}
               setVault={setVault}
               encryptionKey={encryptionKey}
+              alert={alert}
+              setAlert={setAlert}
             />
           </Container>
         </Row>
@@ -107,11 +114,22 @@ const Dashboard = props => {
                       <Accordion.Body>
                         <p>{entry.username}</p>
                         <p>{entry.password}</p>
-                        <Button entryid={entry._id} onClick={deleteEntry}>
-                          delete
-                        </Button>
-                        <Button entryid={entry._id} onClick={handleShowUpdate}>
+
+                        <Button
+                          size='sm'
+                          entryid={entry._id}
+                          onClick={handleShowUpdate}
+                        >
                           edit
+                        </Button>
+                        <Button
+                          entryid={entry._id}
+                          onClick={deleteEntry}
+                          className='float-end'
+                          variant='danger'
+                          size='sm'
+                        >
+                          delete
                         </Button>
                         <UpdateEntryModal
                           show={showUpdate}
@@ -120,6 +138,8 @@ const Dashboard = props => {
                           setVault={setVault}
                           id={updateId}
                           encryptionKey={encryptionKey}
+                          alert={alert}
+                          setAlert={setAlert}
                         />
                       </Accordion.Body>
                     </Accordion.Item>
