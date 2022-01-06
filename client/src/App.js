@@ -7,6 +7,8 @@ import config from './config'
 function App() {
   const { serverUrl, axios } = config
   const [view, setView] = useState('login')
+  const [encryptionKey, setEncryptionKey] = useState('')
+  const [alert, setAlert] = useState('')
 
   const viewConfig = {
     axios: axios,
@@ -23,11 +25,20 @@ function App() {
   }, [axios, serverUrl])
 
   if (view === 'login') {
-    return <Login config={viewConfig} />
+    return (
+      <Login
+        config={viewConfig}
+        setEncryptionKey={setEncryptionKey}
+        alert={alert}
+        setAlert={setAlert}
+      />
+    )
   } else if (view === 'registration') {
-    return <Registration config={viewConfig} />
+    return (
+      <Registration config={viewConfig} alert={alert} setAlert={setAlert} />
+    )
   } else if (view === 'dashboard') {
-    return <Dashboard config={viewConfig} />
+    return <Dashboard config={viewConfig} encryptionKey={encryptionKey} />
   }
 }
 

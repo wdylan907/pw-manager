@@ -21,6 +21,7 @@ const Registration = props => {
         event.target.elements[1].value = ''
         event.target.elements[2].value = ''
         console.log('success')
+        props.setAlert('new')
         setView('login')
       } else if (res.data.status === 1) {
         console.log('username already in use')
