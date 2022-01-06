@@ -8,6 +8,63 @@ import cryptography from '../../cryptography'
 const EntryModal = props => {
   const { serverUrl, axios } = config
 
+  const saveNewEntry = async event => {
+    event.preventDefault()
+    if (event.target.elements[0].value === '') {
+      console.log('alert')
+      props.setAlert(4)
+      return
+    }
+    const newEntryPlain = {
+      label: event.target.elements[0].value,
+      username: event.target.elements[1].value,
+      password: event.target.elements[2].value,
+    }
+    const newEntryEncrypted = cryptography.encryptNewEntry(
+      newEntryPlain,
+      props.encryptionKey
+    )
+    await axios.post(`${serverUrl}/entry`, newEntryEncrypted)
+    props.handleClose()
+    const newDataEncrypted = await axios.get(`${serverUrl}/user`)
+    const newDataPlain = cryptography.decryptVault(
+      newDataEncrypted.data.vault,
+      props.encryptionKey
+    )
+    props.setVault(newDataPlain)
+  }
+
+  const saveUpdatedEntry = async event => {
+    event.preventDefault()
+    const id = props.id
+    console.log(id)
+    const updatedEntryPlain = {
+      id,
+      label: event.target.elements[0].value,
+      username: event.target.elements[1].value,
+      password: event.target.elements[2].value,
+    }
+    const updatedEntryEncrypted = cryptography.encryptUpdatedEntry(
+      updatedEntryPlain,
+      props.encryptionKey
+    )
+    await axios.post(`${serverUrl}/update-entry`, updatedEntryEncrypted)
+    props.handleClose()
+    const newDataEncrypted = await axios.get(`${serverUrl}/user`)
+    const newDataPlain = cryptography.decryptVault(
+      newDataEncrypted.data.vault,
+      props.encryptionKey
+    )
+    props.setVault(newDataPlain)
+  }
+
+  let onSubmit
+  if (props.function === 'new') {
+    onSubmit = saveNewEntry
+  } else if (props.function === 'update') {
+    onSubmit = saveUpdatedEntry
+  }
+
   return (
     <Modal
       show={props.show}
@@ -19,7 +76,7 @@ const EntryModal = props => {
         <Modal.Title>{props.title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form onSubmit={saveEntry}>
+        <Form onSubmit={onSubmit}>
           <Form.Group className='mb-3' controlId='formBasicEmail'>
             <Form.Control type='text' placeholder='label' />
           </Form.Group>
@@ -32,7 +89,6 @@ const EntryModal = props => {
           <Button variant='primary' type='submit'>
             Save
           </Button>
-          <AlertMessage alert={alert} />
         </Form>
       </Modal.Body>
     </Modal>

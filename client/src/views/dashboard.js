@@ -5,8 +5,7 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Accordion from 'react-bootstrap/Accordion'
-import NewEntryModal from './components/NewEntryModal'
-import UpdateEntryModal from './components/UpdateEntryModal'
+import EntryModal from './components/EntryModal'
 import CryptoJS from 'crypto-js'
 
 const Dashboard = props => {
@@ -88,7 +87,7 @@ const Dashboard = props => {
             <Button size='sm' onClick={logout} className='float-end'>
               Log Out
             </Button>
-            <NewEntryModal
+            <EntryModal
               show={showCreate}
               handleClose={handleCloseCreate}
               vault={vault}
@@ -96,6 +95,8 @@ const Dashboard = props => {
               encryptionKey={encryptionKey}
               alert={alert}
               setAlert={setAlert}
+              title={'New Entry'}
+              function={'new'}
             />
           </Container>
         </Row>
@@ -131,7 +132,7 @@ const Dashboard = props => {
                         >
                           delete
                         </Button>
-                        <UpdateEntryModal
+                        <EntryModal
                           show={showUpdate}
                           handleClose={handleCloseUpdate}
                           vault={vault}
@@ -140,6 +141,8 @@ const Dashboard = props => {
                           encryptionKey={encryptionKey}
                           alert={alert}
                           setAlert={setAlert}
+                          title={'Update Entry'}
+                          function={'update'}
                         />
                       </Accordion.Body>
                     </Accordion.Item>
