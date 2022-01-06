@@ -4,7 +4,6 @@ import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import Alert from 'react-bootstrap/Alert'
 import AlertMessage from './components/AlertMessage'
 
 const Login = props => {
@@ -23,6 +22,7 @@ const Login = props => {
       setAlert(null)
     } else {
       console.log('invalid login')
+      setAlert(3)
     }
   }
 
@@ -63,7 +63,7 @@ const Login = props => {
               </Button>
             </Form>
           </Container>
-          <br></br>
+          <br />
           <AlertMessage alert={alert} />
         </Col>
       </Row>

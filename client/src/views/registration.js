@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import AlertMessage from './components/AlertMessage'
 
 const Registration = props => {
   const { axios, setView, serverUrl, alert, setAlert } = props.config
@@ -25,10 +26,11 @@ const Registration = props => {
         setView('login')
       } else if (res.data.status === 1) {
         console.log('username already in use')
-        setAlert('username ')
+        setAlert(1)
       }
     } else {
       console.log('passwords do not match')
+      setAlert(2)
     }
   }
 
@@ -72,6 +74,8 @@ const Registration = props => {
               </Button>
             </Form>
           </Container>
+          <br />
+          <AlertMessage alert={alert} />
         </Col>
       </Row>
     </div>

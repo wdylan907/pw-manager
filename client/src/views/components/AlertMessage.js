@@ -15,6 +15,10 @@ const AlertMessage = props => {
       variant: 'danger',
       message: 'passwords do not match',
     },
+    {
+      variant: 'danger',
+      message: 'invalid username or password',
+    },
   ]
   if (props.alert !== null) {
     return (
