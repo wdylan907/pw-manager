@@ -11,9 +11,11 @@ function App() {
   const [alert, setAlert] = useState('')
 
   const viewConfig = {
-    axios: axios,
-    serverUrl: serverUrl,
-    setView: setView,
+    axios,
+    serverUrl,
+    setView,
+    alert,
+    setAlert,
   }
 
   useEffect(() => {
@@ -25,18 +27,9 @@ function App() {
   }, [axios, serverUrl])
 
   if (view === 'login') {
-    return (
-      <Login
-        config={viewConfig}
-        setEncryptionKey={setEncryptionKey}
-        alert={alert}
-        setAlert={setAlert}
-      />
-    )
+    return <Login config={viewConfig} setEncryptionKey={setEncryptionKey} />
   } else if (view === 'registration') {
-    return (
-      <Registration config={viewConfig} alert={alert} setAlert={setAlert} />
-    )
+    return <Registration config={viewConfig} />
   } else if (view === 'dashboard') {
     return <Dashboard config={viewConfig} encryptionKey={encryptionKey} />
   }

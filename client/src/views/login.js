@@ -7,7 +7,7 @@ import Col from 'react-bootstrap/Col'
 import Alert from 'react-bootstrap/Alert'
 
 const Login = props => {
-  const { axios, setView, serverUrl } = props.config
+  const { axios, setView, serverUrl, alert, setAlert } = props.config
 
   const loginSubmit = async event => {
     event.preventDefault()
@@ -19,7 +19,7 @@ const Login = props => {
     if (res.data.status === 0) {
       props.setEncryptionKey(event.target.elements[1].value)
       setView('dashboard')
-      props.setAlert('')
+      setAlert('')
     } else {
       console.log('invalid login')
     }
@@ -63,7 +63,7 @@ const Login = props => {
             </Form>
           </Container>
           <br></br>
-          {props.alert === 'new' && (
+          {alert === 'new' && (
             <Alert variant='success'>
               <p>account created</p>
             </Alert>

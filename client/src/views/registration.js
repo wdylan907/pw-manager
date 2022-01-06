@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
 const Registration = props => {
-  const { axios, setView, serverUrl } = props.config
+  const { axios, setView, serverUrl, alert, setAlert } = props.config
 
   const registrationSubmit = async event => {
     event.preventDefault()
@@ -21,7 +21,7 @@ const Registration = props => {
         event.target.elements[1].value = ''
         event.target.elements[2].value = ''
         console.log('success')
-        props.setAlert('new')
+        setAlert('new')
         setView('login')
       } else if (res.data.status === 1) {
         console.log('username already in use')
