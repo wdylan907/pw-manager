@@ -67,6 +67,7 @@ const Dashboard = props => {
               handleClose={handleCloseCreate}
               vault={vault}
               setVault={setVault}
+              encryptionKey={encryptionKey}
             />
           </Container>
         </Row>
@@ -97,6 +98,7 @@ const Dashboard = props => {
                           vault={vault}
                           setVault={setVault}
                           id={updateId}
+                          encryptionKey={encryptionKey}
                         />
                       </Accordion.Body>
                     </Accordion.Item>

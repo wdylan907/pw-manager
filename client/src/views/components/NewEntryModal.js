@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import Form from 'react-bootstrap/Form'
 import config from '../../config'
+import CryptoJS from 'crypto-js'
 
 const NewEntryModal = props => {
   const { serverUrl, axios } = config
@@ -12,7 +13,7 @@ const NewEntryModal = props => {
     const newEntry = {
       label: event.target.elements[0].value,
       username: event.target.elements[1].value || null,
-      password: event.target.elements[2].value,
+      password: event.target.elements[2].value || null,
     }
     await axios.post(`${serverUrl}/entry`, newEntry)
     props.handleClose()
