@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import Form from 'react-bootstrap/Form'
 import config from '../../config'
-import CryptoJS from 'crypto-js'
+import cryptography from '../../cryptography'
 
 const NewEntryModal = props => {
   const { serverUrl, axios } = config
@@ -15,24 +15,18 @@ const NewEntryModal = props => {
       username: event.target.elements[1].value,
       password: event.target.elements[2].value,
     }
-    const newEntryEncrypted = {
-      label: CryptoJS.AES.encrypt(
-        newEntryPlain.label,
-        props.encryptionKey
-      ).toString(),
-      username: CryptoJS.AES.encrypt(
-        newEntryPlain.username,
-        props.encryptionKey
-      ).toString(),
-      password: CryptoJS.AES.encrypt(
-        newEntryPlain.password,
-        props.encryptionKey
-      ).toString(),
-    }
+    const newEntryEncrypted = cryptography.encryptNewEntry(
+      newEntryPlain,
+      props.encryptionKey
+    )
     await axios.post(`${serverUrl}/entry`, newEntryEncrypted)
     props.handleClose()
-    const newData = await axios.get(`${serverUrl}/user`)
-    props.setVault(newData.data.vault)
+    const newDataEncrypted = await axios.get(`${serverUrl}/user`)
+    const newDataPlain = cryptography.decryptVault(
+      newDataEncrypted.data.vault,
+      props.encryptionKey
+    )
+    props.setVault(newDataPlain)
   }
 
   return (

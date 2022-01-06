@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col'
 import Accordion from 'react-bootstrap/Accordion'
 import NewEntryModal from './components/NewEntryModal'
 import UpdateEntryModal from './components/UpdateEntryModal'
+import CryptoJS from 'crypto-js'
 
 const Dashboard = props => {
   //console.log('rendering twice?')
@@ -48,8 +49,28 @@ const Dashboard = props => {
 
   useEffect(() => {
     async function getVault() {
-      const obj = await axios.get(`${serverUrl}/user`)
-      setVault(obj.data.vault)
+      const vaultEncrypted = await axios.get(`${serverUrl}/user`)
+      console.log(vaultEncrypted.data.vault)
+      if (vaultEncrypted) {
+        const vaultPlain = vaultEncrypted.data.vault.map(entry => {
+          return {
+            _id: entry._id,
+            label: CryptoJS.AES.decrypt(
+              entry.label,
+              props.encryptionKey
+            ).toString(CryptoJS.enc.Utf8),
+            username: CryptoJS.AES.decrypt(
+              entry.username,
+              props.encryptionKey
+            ).toString(CryptoJS.enc.Utf8),
+            password: CryptoJS.AES.decrypt(
+              entry.password,
+              props.encryptionKey
+            ).toString(CryptoJS.enc.Utf8),
+          }
+        })
+        setVault(vaultPlain)
+      }
     }
     getVault()
   }, [axios, serverUrl])
