@@ -52,7 +52,7 @@ const Dashboard = props => {
 
   const logout = async () => {
     const res = await axios.post(`${serverUrl}/logout`)
-    setAlert(null)
+    //setAlert(null)
     setView(res.data)
   }
 
@@ -102,8 +102,6 @@ const Dashboard = props => {
               vault={vault}
               setVault={setVault}
               encryptionKey={encryptionKey}
-              alert={alert}
-              setAlert={setAlert}
               title={'New Entry'}
               function={'new'}
               selectedData={selectedData}
@@ -197,8 +195,6 @@ const Dashboard = props => {
                           setVault={setVault}
                           id={updateId}
                           encryptionKey={encryptionKey}
-                          alert={alert}
-                          setAlert={setAlert}
                           title={'Update Entry'}
                           function={'update'}
                           selectedData={selectedData}

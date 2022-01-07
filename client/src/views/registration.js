@@ -13,6 +13,14 @@ const Registration = props => {
 
   const registrationSubmit = async event => {
     event.preventDefault()
+    if (
+      event.target.elements[0].value === '' ||
+      event.target.elements[1].value === '' ||
+      event.target.elements[2].value === ''
+    ) {
+      setAlert(5)
+      return
+    }
     if (event.target.elements[1].value === event.target.elements[2].value) {
       const userInfo = {
         username: event.target.elements[0].value,

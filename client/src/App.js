@@ -15,8 +15,6 @@ function App() {
     axios,
     serverUrl,
     setView,
-    alert,
-    setAlert,
   }
 
   useEffect(() => {

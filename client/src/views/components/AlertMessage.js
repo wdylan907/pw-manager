@@ -23,6 +23,10 @@ const AlertMessage = props => {
       variant: 'danger',
       message: 'label is required',
     },
+    {
+      variant: 'danger',
+      message: 'all fields are required',
+    },
   ]
   if (typeof props.alert === 'number') {
     return (

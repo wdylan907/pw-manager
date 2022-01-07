@@ -89,13 +89,15 @@ const EntryModal = props => {
           <Form.Group className='mb-3' controlId='formBasicText'>
             <Form.Control
               type='text'
-              placeholder={props.selectedData.label || 'label'}
+              placeholder='label'
+              defaultValue={props.selectedData.label || null}
             />
           </Form.Group>
           <Form.Group className='mb-3' controlId='formBasicText'>
             <Form.Control
               type='text'
-              placeholder={props.selectedData.username || 'username (optional)'}
+              placeholder='username (optional)'
+              defaultValue={props.selectedData.username || null}
             />
           </Form.Group>
           <Form.Group className='mb-3' controlId='formBasicPassword'>
