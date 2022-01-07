@@ -21,6 +21,7 @@ const Dashboard = props => {
   const [updateId, setUpdateId] = useState('')
   const [selectedData, setSelectedData] = useState({})
   const [showConfirmationAlert, setShowConfirmationAlert] = useState(false)
+  const [passwordDisplayType, setPasswordDisplayType] = useState('password')
 
   const handleCloseCreate = () => setShowCreate(false)
   const handleShowCreate = () => {
@@ -45,8 +46,6 @@ const Dashboard = props => {
 
   const deleteEntry = async event => {
     const entryId = event.target.attributes.entryid.nodeValue
-    console.log(entryId)
-    console.log(typeof entryId)
     await axios.delete(`${serverUrl}/delete-entry`, {
       data: { id: entryId },
     })
@@ -65,7 +64,6 @@ const Dashboard = props => {
   useEffect(() => {
     async function getVault() {
       const vaultEncrypted = await axios.get(`${serverUrl}/user`)
-      console.log(vaultEncrypted.data.vault)
       if (vaultEncrypted) {
         const vaultPlain = vaultEncrypted.data.vault.map(entry => {
           return {
@@ -153,10 +151,8 @@ const Dashboard = props => {
                             <Row>
                               <Col xs={10}>
                                 <Form.Control
-                                  type='password'
-                                  defaultValue={
-                                    entry.password ? '************' : null
-                                  }
+                                  type={passwordDisplayType}
+                                  defaultValue={entry.password || null}
                                   readOnly
                                 />
                               </Col>
@@ -176,6 +172,22 @@ const Dashboard = props => {
                             </Row>
                           </Form.Group>
                         )}
+                        <Form.Group
+                          className='mb-3'
+                          controlId='formBasicCheckbox'
+                        >
+                          <Form.Check
+                            type='checkbox'
+                            label='Show Password'
+                            onChange={() => {
+                              if (passwordDisplayType === 'password') {
+                                setPasswordDisplayType('text')
+                              } else {
+                                setPasswordDisplayType('password')
+                              }
+                            }}
+                          />
+                        </Form.Group>
 
                         <Button
                           size='sm'

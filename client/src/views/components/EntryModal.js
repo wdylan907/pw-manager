@@ -11,6 +11,7 @@ const EntryModal = props => {
   const { serverUrl, axios } = config
 
   const [alert, setAlert] = useState(null)
+  const [passwordDisplayType, setPasswordDisplayType] = useState('password')
 
   const saveNewEntry = async event => {
     event.preventDefault()
@@ -102,9 +103,22 @@ const EntryModal = props => {
           </Form.Group>
           <Form.Group className='mb-3' controlId='formBasicPassword'>
             <Form.Control
-              type='password'
+              type={passwordDisplayType}
               placeholder={'password'}
               defaultValue={props.selectedData.password || null}
+            />
+          </Form.Group>
+          <Form.Group className='mb-3' controlId='formBasicCheckbox'>
+            <Form.Check
+              type='checkbox'
+              label='Show Password'
+              onChange={() => {
+                if (passwordDisplayType === 'password') {
+                  setPasswordDisplayType('text')
+                } else {
+                  setPasswordDisplayType('password')
+                }
+              }}
             />
           </Form.Group>
           <Button variant='primary' type='submit'>
