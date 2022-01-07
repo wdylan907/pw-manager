@@ -5,17 +5,22 @@ import Button from 'react-bootstrap/esm/Button'
 const ConfirmationAlert = props => {
   if (props.show === true) {
     return (
-      <Alert>
-        <p>some alert</p>
+      <Alert variant='danger' className='mt-3'>
+        <p>Delete entry?</p>
         <Button
           onClick={() => {
             props.set(false)
           }}
         >
-          hide
+          Cancel
         </Button>
-        <Button entryid={props.entryid} onClick={props.delete}>
-          delete
+        <Button
+          variant='danger'
+          entryid={props.entryid}
+          onClick={props.delete}
+          className='float-end'
+        >
+          Delete
         </Button>
       </Alert>
     )
