@@ -1,24 +1,26 @@
 import { useState, useEffect } from 'react'
+import CryptoJS from 'crypto-js'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import Form from 'react-bootstrap/Form'
 import Accordion from 'react-bootstrap/Accordion'
 import EntryModal from './components/EntryModal'
-import CryptoJS from 'crypto-js'
-import Form from 'react-bootstrap/Form'
+import ConfirmationAlert from './components/ConfirmationAlert'
 
 const Dashboard = props => {
   //console.log('rendering twice?')
   const encryptionKey = props.encryptionKey
 
-  const { axios, setView, serverUrl, alert, setAlert } = props.config
+  const { axios, setView, serverUrl } = props.config
   const [vault, setVault] = useState([])
   const [showCreate, setShowCreate] = useState(false)
   const [showUpdate, setShowUpdate] = useState(false)
   const [updateId, setUpdateId] = useState('')
   const [selectedData, setSelectedData] = useState({})
+  const [showConfirmationAlert, setShowConfirmationAlert] = useState(false)
 
   const handleCloseCreate = () => setShowCreate(false)
   const handleShowCreate = () => {
@@ -37,6 +39,10 @@ const Dashboard = props => {
     setShowUpdate(true)
   }
 
+  const confirm = () => {
+    setShowConfirmationAlert(true)
+  }
+
   const deleteEntry = async event => {
     const entryId = event.target.attributes.entryid.nodeValue
     console.log(entryId)
@@ -48,11 +54,11 @@ const Dashboard = props => {
       return entry._id !== entryId
     })
     setVault(newVault)
+    setShowConfirmationAlert(false)
   }
 
   const logout = async () => {
     const res = await axios.post(`${serverUrl}/logout`)
-    //setAlert(null)
     setView(res.data)
   }
 
@@ -82,7 +88,7 @@ const Dashboard = props => {
       }
     }
     getVault()
-  }, [axios, serverUrl])
+  }, [axios, serverUrl, props.encryptionKey])
 
   if (vault) {
     return (
@@ -179,14 +185,21 @@ const Dashboard = props => {
                           edit
                         </Button>
                         <Button
-                          entryid={entry._id}
-                          onClick={deleteEntry}
+                          //entryid={entry._id}
+                          //onClick={deleteEntry}
                           className='float-end'
                           variant='danger'
                           size='sm'
+                          onClick={confirm}
                         >
                           delete
                         </Button>
+                        <ConfirmationAlert
+                          entryid={entry._id}
+                          delete={deleteEntry}
+                          show={showConfirmationAlert}
+                          set={setShowConfirmationAlert}
+                        />
 
                         <EntryModal
                           show={showUpdate}
