@@ -127,20 +127,7 @@ const Dashboard = props => {
                       <Accordion.Body>
                         {entry.username && (
                           <Row>
-                            <Col xs={10}>
-                              <p className='ml-3'>{entry.username}</p>
-                            </Col>
-                            <Col xs={2}>
-                              <Button
-                                className='mt-1'
-                                size='sm'
-                                onClick={() => {
-                                  navigator.clipboard.writeText(entry.username)
-                                }}
-                              >
-                                copy
-                              </Button>
-                            </Col>
+                            <p className='ml-3'>{entry.username}</p>
                           </Row>
                         )}
                         {entry.password && (

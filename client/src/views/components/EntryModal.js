@@ -3,15 +3,19 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import Form from 'react-bootstrap/Form'
+import Row from 'react-bootstrap/esm/Row'
+import Col from 'react-bootstrap/esm/Col'
 import config from '../../config'
 import cryptography from '../../cryptography'
 import AlertMessage from './AlertMessage'
+import passwordGenerator from '../../pw-tool'
 
 const EntryModal = props => {
   const { serverUrl, axios } = config
 
   const [alert, setAlert] = useState(null)
   const [passwordDisplayType, setPasswordDisplayType] = useState('password')
+  const [passwordValue, setPasswordValue] = useState('')
 
   const saveNewEntry = async event => {
     event.preventDefault()
@@ -101,13 +105,32 @@ const EntryModal = props => {
               defaultValue={props.selectedData.username || null}
             />
           </Form.Group>
-          <Form.Group className='mb-3' controlId='formBasicPassword'>
-            <Form.Control
-              type={passwordDisplayType}
-              placeholder={'password'}
-              defaultValue={props.selectedData.password || null}
-            />
-          </Form.Group>
+          <Row>
+            <Col xs={10}>
+              <Form.Group className='mb-3' controlId='formBasicPassword'>
+                <Form.Control
+                  value={passwordValue || props.selectedData.password || null}
+                  type={passwordDisplayType}
+                  placeholder={'password'}
+                  onChange={event => {
+                    setPasswordValue(event.target.value)
+                  }}
+                />
+              </Form.Group>
+            </Col>
+            <Col xs={2}>
+              <Button
+                size='sm'
+                className='mt-1'
+                onClick={() => {
+                  setPasswordValue(passwordGenerator(true))
+                }}
+              >
+                Random
+              </Button>
+            </Col>
+          </Row>
+
           <Form.Group className='mb-3' controlId='formBasicCheckbox'>
             <Form.Check
               type='checkbox'
