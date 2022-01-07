@@ -5,9 +5,11 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import AlertMessage from './components/AlertMessage'
+import { useState } from 'react'
 
 const Login = props => {
-  const { axios, setView, serverUrl, alert, setAlert } = props.config
+  const { axios, setView, serverUrl } = props.config
+  const [alert, setAlert] = useState(null)
 
   const loginSubmit = async event => {
     event.preventDefault()

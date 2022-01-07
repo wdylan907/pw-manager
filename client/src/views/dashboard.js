@@ -123,8 +123,55 @@ const Dashboard = props => {
                     <Accordion.Item key={entry._id} eventKey={entry._id}>
                       <Accordion.Header>{entry.label}</Accordion.Header>
                       <Accordion.Body>
-                        <p>{entry.username}</p>
-                        <p>{entry.password}</p>
+                        {entry.username && (
+                          <Row>
+                            <Col xs={10}>
+                              <p className='ml-3'>{entry.username}</p>
+                            </Col>
+                            <Col xs={2}>
+                              <Button
+                                className='mt-1'
+                                size='sm'
+                                onClick={() => {
+                                  navigator.clipboard.writeText(entry.username)
+                                }}
+                              >
+                                copy
+                              </Button>
+                            </Col>
+                          </Row>
+                        )}
+                        {entry.password && (
+                          <Form.Group
+                            className='mb-3'
+                            controlId='formBasicPassword'
+                          >
+                            <Row>
+                              <Col xs={10}>
+                                <Form.Control
+                                  type='password'
+                                  defaultValue={
+                                    entry.password ? '************' : null
+                                  }
+                                  readOnly
+                                />
+                              </Col>
+                              <Col xs={2}>
+                                <Button
+                                  className='mt-1'
+                                  size='sm'
+                                  onClick={() => {
+                                    navigator.clipboard.writeText(
+                                      entry.password
+                                    )
+                                  }}
+                                >
+                                  copy
+                                </Button>
+                              </Col>
+                            </Row>
+                          </Form.Group>
+                        )}
 
                         <Button
                           size='sm'
@@ -142,6 +189,7 @@ const Dashboard = props => {
                         >
                           delete
                         </Button>
+
                         <EntryModal
                           show={showUpdate}
                           handleClose={handleCloseUpdate}

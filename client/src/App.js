@@ -3,6 +3,7 @@ import Dashboard from './views/Dashboard'
 import Login from './views/Login'
 import Registration from './views/Registration'
 import config from './config'
+import passwordGenerator from './pw-tool'
 
 function App() {
   const { serverUrl, axios } = config

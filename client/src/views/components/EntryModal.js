@@ -4,17 +4,21 @@ import Modal from 'react-bootstrap/Modal'
 import Form from 'react-bootstrap/Form'
 import config from '../../config'
 import cryptography from '../../cryptography'
+import { useState } from 'react'
+import AlertMessage from './AlertMessage'
 
 const EntryModal = props => {
   const { serverUrl, axios } = config
 
+  const [alert, setAlert] = useState(null)
+
   const saveNewEntry = async event => {
     event.preventDefault()
     if (event.target.elements[0].value === '') {
-      console.log('alert')
-      props.setAlert(4)
+      setAlert(4)
       return
     }
+    setAlert(null)
     const newEntryPlain = {
       label: event.target.elements[0].value,
       username: event.target.elements[1].value,
@@ -36,6 +40,11 @@ const EntryModal = props => {
 
   const saveUpdatedEntry = async event => {
     event.preventDefault()
+    if (event.target.elements[0].value === '') {
+      setAlert(4)
+      return
+    }
+    setAlert(null)
     const id = props.id
     console.log(id)
     const updatedEntryPlain = {
@@ -100,6 +109,8 @@ const EntryModal = props => {
             Save
           </Button>
         </Form>
+        <br />
+        <AlertMessage alert={alert} />
       </Modal.Body>
     </Modal>
   )
