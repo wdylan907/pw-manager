@@ -20,12 +20,10 @@ router.post('/login', async (req, res) => {
       user.passwordHash
     )
     if (!user || !correctPassword) {
-      console.log('invalid username or password')
       return res.json({ status: 1 })
     }
     req.session.isAuth = true
     req.session.username = user.username
-    console.log(`logging on user ${user.username}`)
     return res.json({ status: 0 })
   } catch (error) {
     console.log(error)
@@ -56,10 +54,8 @@ router.post('/register', async (req, res) => {
 })
 
 router.post('/logout', (req, res) => {
-  const user = req.session.username
   req.session.destroy(err => {
     if (err) throw err
-    console.log(`user ${user} logged out`)
     res.redirect('/login')
   })
 })
@@ -67,7 +63,6 @@ router.post('/logout', (req, res) => {
 router.get('/user/', isAuth, async (req, res) => {
   try {
     const user = await User.findOne({ username: req.session.username })
-    console.log(user)
     res.json(user)
   } catch (error) {
     console.log(user)
@@ -82,10 +77,8 @@ router.post('/entry', isAuth, async (req, res) => {
       username: req.body.username,
       password: req.body.password,
     }
-    console.log(newEntry)
     user.vault.push(newEntry)
     await user.save()
-    console.log(`entry for ${req.body.label} added`)
     res.json(user)
   } catch (error) {
     console.log(error)
@@ -96,9 +89,6 @@ router.post('/update-entry', isAuth, async (req, res) => {
   try {
     const user = await User.findOne({ username: req.session.username })
     const entries = user.vault.filter(entry => {
-      console.log(entry._id.toString())
-      console.log(req.body.id)
-      console.log(entry._id.toString() !== req.body.id)
       return entry._id.toString() !== req.body.id
     })
     newEntry = {
@@ -109,7 +99,6 @@ router.post('/update-entry', isAuth, async (req, res) => {
     entries.push(newEntry)
     user.vault = entries
     await user.save()
-    console.log(user)
     res.json(user)
   } catch (error) {
     console.log(error)
@@ -118,9 +107,6 @@ router.post('/update-entry', isAuth, async (req, res) => {
 
 router.delete('/delete-entry', isAuth, async (req, res) => {
   try {
-    console.log('#############')
-    console.log(req.body.id)
-    console.log('#############')
     const user = await User.findOne({ username: req.session.username })
     const newVault = user.vault.filter(entry => {
       return entry._id.toString() !== req.body.id
