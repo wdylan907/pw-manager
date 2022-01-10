@@ -1,20 +1,9 @@
-const passwordGenerator = special => {
-  const numbers = '0123456789'
+const passwordGenerator = length => {
   const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
-  const specials = '!@#$%^&*()'
-
-  let chars = ''
-  if (special) {
-    chars += numbers
-    chars += letters
-    chars += specials
-  } else {
-    chars += numbers
-    chars += letters
-  }
+  const chars = letters + '0123456789'
 
   let string = letters.charAt(Math.floor(Math.random() * letters.length))
-  for (let i = 0; i < 23; i++) {
+  for (let i = 0; i < length - 1; i++) {
     string += chars.charAt(Math.floor(Math.random() * chars.length))
   }
 
