@@ -1,20 +1,5 @@
 const mongoose = require('mongoose')
 
-// const entrySchema = new mongoose.Schema({
-//   label: { type: String, required: true },
-//   fields: {
-//     type: Map,
-//     of: String,
-//     default: {},
-//   },
-// })
-
-// const entrySchema = new mongoose.Schema({
-//   label: { type: String, required: true },
-//   username: String,
-//   password: { type: String, required: true },
-// })
-
 const schema = new mongoose.Schema({
   username: {
     type: String,

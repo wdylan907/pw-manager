@@ -51,7 +51,6 @@ const EntryModal = props => {
     }
     setAlert(null)
     const id = props.id
-    console.log(id)
     const updatedEntryPlain = {
       id,
       label: event.target.elements[0].value,
@@ -101,7 +100,7 @@ const EntryModal = props => {
           <Form.Group className='mb-3' controlId='formBasicText'>
             <Form.Control
               type='text'
-              placeholder='username (optional)'
+              placeholder='username'
               defaultValue={props.selectedData.username || null}
             />
           </Form.Group>

@@ -23,6 +23,14 @@ function App() {
     getView()
   }, [axios, serverUrl])
 
+  useEffect(() => {
+    const logout = async () => {
+      const res = await axios.post(`${serverUrl}/logout`)
+      setView(res.data)
+    }
+    logout()
+  }, [])
+
   if (view === 'login') {
     return <Login config={viewConfig} setEncryptionKey={setEncryptionKey} />
   } else if (view === 'registration') {

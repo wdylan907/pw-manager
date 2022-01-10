@@ -4,14 +4,17 @@ const cors = require('cors')
 const config = require('./config')
 const router = require('./controllers/router')
 
-config.connectToDB()
+const { connectToDB, corsConfig, sessionConfig, port } = config
+
+connectToDB()
 
 const app = express()
+
 app.use(express.json())
-app.use(cors({ credentials: true, origin: config.clientURL }))
-app.use(session(config.sessionConfig))
+app.use(cors(corsConfig))
+app.use(session(sessionConfig))
 app.use(router)
 
-app.listen(config.port, () => {
-  console.log(`listening on port ${config.port}`)
+app.listen(port, () => {
+  console.log(`listening on port ${port}`)
 })

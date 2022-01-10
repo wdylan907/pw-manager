@@ -14,6 +14,10 @@ const connectToDB = () => {
   })
 }
 
+const port = process.env.PORT
+
+const clientURL = process.env.CLIENT_URL
+
 const sessionConfig = {
   secret: process.env.SECRET,
   resave: false,
@@ -28,8 +32,9 @@ const sessionConfig = {
   },
 }
 
-const port = process.env.PORT
+corsConfig = {
+  credentials: true,
+  origin: clientURL,
+}
 
-const clientURL = process.env.CLIENT_URL
-
-module.exports = { connectToDB, sessionConfig, port, clientURL }
+module.exports = { connectToDB, sessionConfig, port, corsConfig }
