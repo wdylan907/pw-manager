@@ -1,15 +1,6 @@
 import CryptoJS from 'crypto-js'
 
-const encryptNewEntry = (entry, key) => {
-  const encryptedEntry = {
-    label: CryptoJS.AES.encrypt(entry.label, key).toString(),
-    username: CryptoJS.AES.encrypt(entry.username, key).toString(),
-    password: CryptoJS.AES.encrypt(entry.password, key).toString(),
-  }
-  return encryptedEntry
-}
-
-const encryptUpdatedEntry = (entry, key) => {
+const encryptEntry = (entry, key) => {
   const encryptedEntry = {
     id: entry.id,
     label: CryptoJS.AES.encrypt(entry.label, key).toString(),
@@ -36,7 +27,6 @@ const decryptVault = (vault, key) => {
 }
 
 export default {
-  encryptNewEntry,
-  encryptUpdatedEntry,
+  encryptEntry,
   decryptVault,
 }

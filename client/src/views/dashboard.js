@@ -11,7 +11,6 @@ import EntryModal from './components/EntryModal'
 import ConfirmationAlert from './components/ConfirmationAlert'
 
 const Dashboard = props => {
-  //console.log('rendering twice?')
   const encryptionKey = props.encryptionKey
 
   const { axios, setView, serverUrl } = props.config

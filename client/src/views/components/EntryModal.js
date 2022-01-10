@@ -17,23 +17,32 @@ const EntryModal = props => {
   const [passwordDisplayType, setPasswordDisplayType] = useState('password')
   const [passwordValue, setPasswordValue] = useState('')
 
-  const saveNewEntry = async event => {
+  const saveEntry = async event => {
     event.preventDefault()
     if (event.target.elements[0].value === '') {
       setAlert(4)
       return
     }
     setAlert(null)
-    const newEntryPlain = {
+    const entryPlain = {
       label: event.target.elements[0].value,
       username: event.target.elements[1].value,
       password: event.target.elements[2].value,
     }
-    const newEntryEncrypted = cryptography.encryptNewEntry(
-      newEntryPlain,
+    if (props.id) {
+      entryPlain.id = props.id
+    }
+    const entryEncrypted = cryptography.encryptEntry(
+      entryPlain,
       props.encryptionKey
     )
-    await axios.post(`${serverUrl}/entry`, newEntryEncrypted)
+    let route = ''
+    if (props.function === 'new') {
+      route = 'entry'
+    } else if (props.function === 'update') {
+      route = 'update-entry'
+    }
+    await axios.post(`${serverUrl}/${route}`, entryEncrypted)
     props.handleClose()
     const newDataEncrypted = await axios.get(`${serverUrl}/user`)
     const newDataPlain = cryptography.decryptVault(
@@ -41,41 +50,6 @@ const EntryModal = props => {
       props.encryptionKey
     )
     props.setVault(newDataPlain)
-  }
-
-  const saveUpdatedEntry = async event => {
-    event.preventDefault()
-    if (event.target.elements[0].value === '') {
-      setAlert(4)
-      return
-    }
-    setAlert(null)
-    const id = props.id
-    const updatedEntryPlain = {
-      id,
-      label: event.target.elements[0].value,
-      username: event.target.elements[1].value,
-      password: event.target.elements[2].value,
-    }
-    const updatedEntryEncrypted = cryptography.encryptUpdatedEntry(
-      updatedEntryPlain,
-      props.encryptionKey
-    )
-    await axios.post(`${serverUrl}/update-entry`, updatedEntryEncrypted)
-    props.handleClose()
-    const newDataEncrypted = await axios.get(`${serverUrl}/user`)
-    const newDataPlain = cryptography.decryptVault(
-      newDataEncrypted.data.vault,
-      props.encryptionKey
-    )
-    props.setVault(newDataPlain)
-  }
-
-  let onSubmit
-  if (props.function === 'new') {
-    onSubmit = saveNewEntry
-  } else if (props.function === 'update') {
-    onSubmit = saveUpdatedEntry
   }
 
   return (
@@ -89,7 +63,7 @@ const EntryModal = props => {
         <Modal.Title>{props.title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form onSubmit={onSubmit}>
+        <Form onSubmit={saveEntry}>
           <Form.Group className='mb-3' controlId='formBasicText'>
             <Form.Control
               type='text'
