@@ -122,7 +122,7 @@ const EntryModal = props => {
                 size='sm'
                 className='mt-1'
                 onClick={() => {
-                  setPasswordValue(passwordGenerator(24))
+                  setPasswordValue(passwordGenerator())
                 }}
               >
                 Random
