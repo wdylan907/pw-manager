@@ -12,8 +12,8 @@ import ConfirmationAlert from './components/ConfirmationAlert'
 
 const Dashboard = props => {
   const encryptionKey = props.encryptionKey
-
   const { axios, setView, serverUrl } = props.config
+
   const [vault, setVault] = useState([])
   const [showCreate, setShowCreate] = useState(false)
   const [showUpdate, setShowUpdate] = useState(false)
@@ -183,8 +183,6 @@ const Dashboard = props => {
                           edit
                         </Button>
                         <Button
-                          //entryid={entry._id}
-                          //onClick={deleteEntry}
                           className='float-end'
                           variant='danger'
                           size='sm'
