@@ -23,7 +23,6 @@ const Login = props => {
       setView('dashboard')
       setAlert(null)
     } else {
-      console.log('invalid login')
       setAlert(3)
     }
   }
