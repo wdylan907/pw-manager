@@ -31,15 +31,12 @@ const Registration = props => {
         event.target.elements[0].value = ''
         event.target.elements[1].value = ''
         event.target.elements[2].value = ''
-        console.log('success')
         setAlert(0)
         setView('login')
       } else if (res.data.status === 1) {
-        console.log('username already in use')
         setAlert(1)
       }
     } else {
-      console.log('passwords do not match')
       setAlert(2)
     }
   }
