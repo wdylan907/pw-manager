@@ -36,13 +36,11 @@ const EntryModal = props => {
       entryPlain,
       props.encryptionKey
     )
-    let route = ''
     if (props.function === 'new') {
-      route = 'entry'
+      await axios.post(`${serverUrl}/entry`, entryEncrypted)
     } else if (props.function === 'update') {
-      route = 'update-entry'
+      await axios.put(`${serverUrl}/entry`, entryEncrypted)
     }
-    await axios.post(`${serverUrl}/${route}`, entryEncrypted)
     props.handleClose()
     const newDataEncrypted = await axios.get(`${serverUrl}/user`)
     const newDataPlain = cryptography.decryptVault(

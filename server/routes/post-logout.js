@@ -7,4 +7,4 @@ router.post('/logout', (req, res) => {
   })
 })
 
-export { router as postLogoutRouter }
+module.exports = router

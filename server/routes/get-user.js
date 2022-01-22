@@ -11,4 +11,4 @@ router.get('/user/', isAuth, async (req, res) => {
   }
 })
 
-export { router as getUserRouter }
+module.exports = router

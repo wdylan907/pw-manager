@@ -20,4 +20,4 @@ router.post('/register', async (req, res) => {
   }
 })
 
-export { router as postRegisterRouter }
+module.exports = router

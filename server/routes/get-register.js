@@ -5,4 +5,4 @@ router.get('/register', isNotAuth, (req, res) => {
   res.status(200).send('registration')
 })
 
-export { router as getRegisterRouter }
+module.exports = router

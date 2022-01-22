@@ -2,7 +2,7 @@ const router = require('express').Router()
 const User = require('../models/user')
 const isAuth = require('../middleware/isAuth')
 
-router.post('/update-entry', isAuth, async (req, res) => {
+router.put('/entry', isAuth, async (req, res) => {
   try {
     const user = await User.findOne({ username: req.session.username })
     const entries = user.vault.filter(entry => {
@@ -22,4 +22,4 @@ router.post('/update-entry', isAuth, async (req, res) => {
   }
 })
 
-export { router as postUpdateEntryRouter }
+module.exports = router

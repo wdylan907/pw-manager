@@ -5,4 +5,4 @@ router.get('/login', isNotAuth, (req, res) => {
   res.status(200).send('login')
 })
 
-export { router as getLoginRouter }
+module.exports = router

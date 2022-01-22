@@ -18,4 +18,4 @@ router.post('/entry', isAuth, async (req, res) => {
   }
 })
 
-export { router as postEntryRouter }
+module.exports = router

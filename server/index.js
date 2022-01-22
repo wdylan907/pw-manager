@@ -12,7 +12,7 @@ const postEntryRouter = require('./routes/post-entry')
 const postLoginRouter = require('./routes/post-login')
 const postLogoutRouter = require('./routes/post-logout')
 const postRegisterRouter = require('./routes/post-register')
-const postUpdateEntry = require('./routes/post-update-entry')
+const putEntryRouter = require('./routes/put-entry')
 
 const { connectToDB, corsConfig, sessionConfig, port } = config
 
@@ -31,7 +31,7 @@ app.use(postEntryRouter)
 app.use(postLoginRouter)
 app.use(postLogoutRouter)
 app.use(postRegisterRouter)
-app.use(postUpdateEntry)
+app.use(putEntryRouter)
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`)

@@ -16,4 +16,4 @@ router.delete('/delete-entry', isAuth, async (req, res) => {
   }
 })
 
-export { router as deleteEntryRouter }
+module.exports = router
