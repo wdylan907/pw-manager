@@ -17,9 +17,12 @@ const putEntryRouter = require('./routes/put-entry')
 const { connectToDB, corsConfig, sessionConfig, port } = config
 
 const app = express()
+
 app.use(express.json())
+
 app.use(cors(corsConfig))
 app.use(session(sessionConfig))
+
 app.use(deleteEntryRouter)
 app.use(getIndexRouter)
 app.use(getLoginRouter)

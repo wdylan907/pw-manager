@@ -1,4 +1,3 @@
-const session = require('express-session')
 const MongoDBStore = require('connect-mongodb-session')(session)
 const mongoose = require('mongoose')
 
@@ -32,7 +31,7 @@ const sessionConfig = {
   },
 }
 
-corsConfig = {
+const corsConfig = {
   credentials: true,
   origin: clientURL,
 }
