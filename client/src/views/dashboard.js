@@ -45,7 +45,7 @@ const Dashboard = props => {
 
   const deleteEntry = async event => {
     const entryId = event.target.attributes.entryid.nodeValue
-    await axios.delete(`${serverUrl}/delete-entry`, {
+    await axios.delete(`${serverUrl}/entry`, {
       data: { id: entryId },
     })
     const newVault = vault.filter(entry => {
