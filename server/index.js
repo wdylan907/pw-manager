@@ -16,8 +16,6 @@ const putEntryRouter = require('./routes/put-entry')
 
 const { connectToDB, corsConfig, sessionConfig, port } = config
 
-connectToDB()
-
 const app = express()
 app.use(express.json())
 app.use(cors(corsConfig))
@@ -32,6 +30,8 @@ app.use(postLoginRouter)
 app.use(postLogoutRouter)
 app.use(postRegisterRouter)
 app.use(putEntryRouter)
+
+connectToDB()
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`)
