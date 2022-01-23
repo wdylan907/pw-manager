@@ -1,6 +1,6 @@
 REQUESTS.http
 node_modules
 .env
-scratch.js
-BUGS
+x.js
+BUGS.txt
 TODO.txt
