@@ -1,7 +1,6 @@
 const express = require('express')
 const session = require('express-session')
 const cors = require('cors')
-const config = require('./config')
 
 const deleteEntryRouter = require('./routes/delete-entry')
 const getIndexRouter = require('./routes/get-index')
@@ -14,7 +13,7 @@ const postLogoutRouter = require('./routes/post-logout')
 const postRegisterRouter = require('./routes/post-register')
 const putEntryRouter = require('./routes/put-entry')
 
-const { connectToDB, corsConfig, sessionConfig, port } = config
+const { corsConfig, sessionConfig, port } = require('./config')
 
 const app = express()
 
@@ -34,11 +33,8 @@ app.use(postLogoutRouter)
 app.use(postRegisterRouter)
 app.use(putEntryRouter)
 
-connectToDB()
-
-const server = app.listen(port, () => {
+app.listen(port, () => {
   console.log(`server listening on port ${port}`)
 })
 
 exports.app = app
-exports.server = server

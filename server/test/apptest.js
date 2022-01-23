@@ -1,6 +1,6 @@
 const expect = require('expect.js')
 const request = require('supertest')
-const { app, server } = require('../index')
+const { app } = require('../index')
 
 it('tests app', async () => {
   const res = await request(app).get('/login')
@@ -8,6 +8,6 @@ it('tests app', async () => {
   expect(res.text).to.be('login')
 })
 
-after(() => {
-  server.close(ar)
-})
+// after(() => {
+//   server.close(() => {})
+// })

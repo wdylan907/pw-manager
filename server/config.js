@@ -11,11 +11,9 @@ const mongoURI =
     ? process.env.TEST_MONGODB_URI
     : process.env.MONGODB_URI
 
-const connectToDB = () => {
-  mongoose.connect(mongoURI, () => {
-    console.log('connected to db')
-  })
-}
+mongoose.connect(mongoURI, () => {
+  console.log('connected to db')
+})
 
 const port = process.env.PORT
 
@@ -40,4 +38,8 @@ const corsConfig = {
   origin: clientURL,
 }
 
-module.exports = { connectToDB, sessionConfig, port, corsConfig }
+module.exports = {
+  sessionConfig,
+  port,
+  corsConfig,
+}
