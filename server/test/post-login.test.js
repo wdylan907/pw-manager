@@ -8,7 +8,7 @@ const session = require('supertest-session')
 describe('POST login', () => {
   let authenticatedSession
 
-  beforeEach(async () => {
+  before(async () => {
     const user = new User({
       username: 'testuser',
       passwordHash: await bcrypt.hash('password', 10),
@@ -40,7 +40,7 @@ describe('POST login', () => {
     expect(JSON.parse(res.text).status).to.be(1)
   })
 
-  afterEach(async () => {
+  after(async () => {
     await User.deleteMany({})
     await authenticatedSession.post('/logout')
   })
