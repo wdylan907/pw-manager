@@ -1,5 +1,4 @@
 const expect = require('expect.js')
-const request = require('supertest')
 const { app } = require('../index')
 const User = require('../models/user')
 const bcrypt = require('bcrypt')
@@ -23,7 +22,7 @@ describe('POST login', () => {
   })
 
   it('returns 401 when incorrect password given', async () => {
-    const res = await request(app).post('/login').send({
+    const res = await session(app).post('/login').send({
       username: 'testuser',
       password: 'asdasd',
     })
@@ -32,7 +31,7 @@ describe('POST login', () => {
   })
 
   it('returns 401 when invalid username given', async () => {
-    const res = await request(app).post('/login').send({
+    const res = await session(app).post('/login').send({
       username: 'asdasdasd',
       password: 'asdasd',
     })

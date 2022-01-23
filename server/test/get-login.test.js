@@ -1,5 +1,4 @@
 const expect = require('expect.js')
-const request = require('supertest')
 const { app } = require('../index')
 const User = require('../models/user')
 const bcrypt = require('bcrypt')
@@ -23,7 +22,7 @@ describe('GET login', () => {
   })
 
   it('sends string "login" when not logged in', async () => {
-    const res = await request(app).get('/login')
+    const res = await session(app).get('/login')
     expect(res.statusCode).to.be(200)
     expect(res.text).to.be('login')
   })
