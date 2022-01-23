@@ -36,6 +36,9 @@ app.use(putEntryRouter)
 
 connectToDB()
 
-app.listen(port, () => {
-  console.log(`listening on port ${port}`)
+const server = app.listen(port, () => {
+  console.log(`server listening on port ${port}`)
 })
+
+exports.app = app
+exports.server = server

@@ -1,3 +1,4 @@
+const session = require('express-session')
 const MongoDBStore = require('connect-mongodb-session')(session)
 const mongoose = require('mongoose')
 
@@ -5,7 +6,10 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
-const mongoURI = process.env.MONGODB_URI
+const mongoURI =
+  process.env.NODE_ENV === 'test'
+    ? process.env.TEST_MONGODB_URI
+    : process.env.MONGODB_URI
 
 const connectToDB = () => {
   mongoose.connect(mongoURI, () => {

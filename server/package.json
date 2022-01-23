@@ -1,11 +1,12 @@
 {
-  "name": "login4",
+  "name": "pw-manager",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js"
+    "start": "cross-env NODE_ENV=production node index.js",
+    "test": "cross-env NODE_ENV=test mocha",
+    "dev": "cross-env NODE_ENV=development nodemon index.js"
   },
   "keywords": [],
   "author": "",
@@ -14,13 +15,17 @@
     "bcrypt": "^5.0.1",
     "connect-mongodb-session": "^3.1.1",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "express": "^4.17.2",
     "express-session": "^1.17.2",
     "mongoose": "^6.1.3"
   },
   "devDependencies": {
     "dotenv": "^10.0.0",
+    "expect.js": "^0.3.1",
+    "mocha": "^8.1.3",
     "nodemon": "^2.0.15",
-    "randomstring": "^1.2.1"
+    "randomstring": "^1.2.1",
+    "supertest": "^6.2.2"
   }
 }
