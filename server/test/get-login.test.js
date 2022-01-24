@@ -1,5 +1,5 @@
 const expect = require('expect.js')
-const { app } = require('../index')
+const app = require('../index')
 const User = require('../models/user')
 const Session = require('../models/session')
 const bcrypt = require('bcrypt')
