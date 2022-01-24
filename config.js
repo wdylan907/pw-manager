@@ -23,7 +23,8 @@ const sessionConfig = {
     collection: 'sessions',
   }),
   cookie: {
-    httpOnly: true,
+    sameSite: true,
+    httpOnly: false,
     maxAge: 360000,
   },
 }
