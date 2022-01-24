@@ -9,6 +9,10 @@ const errorHandler = (error, req, res, next) => {
     return res.status(400).json({ status: 1 })
   }
 
+  if (error.message === 'unknown endpoint') {
+    return res.status(404).json({ message: 'unknown endpoint' })
+  }
+
   next(error)
 }
 
