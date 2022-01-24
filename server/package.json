@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=production node index.js",
-    "test": "cross-env NODE_ENV=test mocha --exit",
+    "test": "cross-env NODE_ENV=test mocha --require mocha-suppress-logs --exit",
     "dev": "cross-env NODE_ENV=development nodemon index.js"
   },
   "keywords": [],
@@ -24,6 +24,7 @@
     "dotenv": "^10.0.0",
     "expect.js": "^0.3.1",
     "mocha": "^8.1.3",
+    "mocha-suppress-logs": "^0.3.1",
     "nodemon": "^2.0.15",
     "randomstring": "^1.2.1",
     "supertest": "^6.2.2",

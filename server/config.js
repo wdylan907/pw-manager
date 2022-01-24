@@ -12,7 +12,7 @@ const mongoURI =
     : process.env.MONGODB_URI
 
 mongoose.connect(mongoURI, () => {
-  console.log('connected to db')
+  //console.log('connected to db')
 })
 
 const port = process.env.PORT
