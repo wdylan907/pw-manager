@@ -1,6 +1,7 @@
 const expect = require('expect.js')
 const { app } = require('../index')
 const User = require('../models/user')
+const Session = require('../models/session')
 const bcrypt = require('bcrypt')
 const session = require('supertest-session')
 
@@ -8,11 +9,10 @@ describe('GET login', () => {
   let authenticatedSession
 
   before(async () => {
-    const user = new User({
+    await new User({
       username: 'testuser',
       passwordHash: await bcrypt.hash('password', 10),
-    })
-    await user.save()
+    }).save()
 
     authenticatedSession = session(app)
     await authenticatedSession.post('/login').send({
@@ -36,6 +36,6 @@ describe('GET login', () => {
 
   after(async () => {
     await User.deleteMany({})
-    await authenticatedSession.post('/logout')
+    await Session.deleteMany({})
   })
 })
