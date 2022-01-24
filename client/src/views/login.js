@@ -18,7 +18,7 @@ const Login = props => {
       password: event.target.elements[1].value,
     }
     const res = await axios.post(`${serverUrl}/login`, loginInfo)
-    if (res.data.status === 0) {
+    if (res.data.code === 0) {
       props.setEncryptionKey(event.target.elements[1].value)
       setView('dashboard')
       setAlert(null)
