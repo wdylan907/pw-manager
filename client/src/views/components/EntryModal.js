@@ -6,9 +6,9 @@ import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/esm/Row'
 import Col from 'react-bootstrap/esm/Col'
 import config from '../../config'
-import cryptography from '../../cryptography'
+import cryptography from '../../services/cryptography'
 import AlertMessage from './AlertMessage'
-import passwordGenerator from '../../pw-tool'
+import passwordGenerator from '../../services/pw-tool'
 
 const EntryModal = props => {
   const { serverUrl, axios } = config

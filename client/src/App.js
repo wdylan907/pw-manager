@@ -2,18 +2,11 @@ import React, { useState, useEffect } from 'react'
 import Dashboard from './views/Dashboard'
 import Login from './views/Login'
 import Registration from './views/Registration'
-import config from './config'
+import axios from 'axios'
 
 function App() {
-  const { serverUrl, axios } = config
   const [view, setView] = useState('login')
   const [encryptionKey, setEncryptionKey] = useState('')
-
-  const viewConfig = {
-    axios,
-    serverUrl,
-    setView,
-  }
 
   useEffect(() => {
     async function getView() {
@@ -30,6 +23,16 @@ function App() {
     }
     logout()
   }, [])
+
+  axios.defaults.withCredentials = true
+
+  const serverUrl = 'http://localhost:5000'
+
+  const viewConfig = {
+    axios,
+    serverUrl,
+    setView,
+  }
 
   if (view === 'login') {
     return <Login config={viewConfig} setEncryptionKey={setEncryptionKey} />
