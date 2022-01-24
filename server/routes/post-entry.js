@@ -2,7 +2,7 @@ const router = require('express').Router()
 const User = require('../models/user')
 const isAuth = require('../middleware/isAuth')
 
-router.post('/entry', isAuth, async (req, res) => {
+router.post('/entry', isAuth, async (req, res, next) => {
   try {
     const user = await User.findOne({ username: req.session.username })
     const newEntry = {
@@ -14,7 +14,7 @@ router.post('/entry', isAuth, async (req, res) => {
     await user.save()
     res.status(201).json(user)
   } catch (error) {
-    console.log(error)
+    next(error)
   }
 })
 

@@ -2,7 +2,7 @@ const router = require('express').Router()
 const bcrypt = require('bcrypt')
 const User = require('../models/user')
 
-router.post('/register', async (req, res) => {
+router.post('/register', async (req, res, next) => {
   try {
     const existingUser = await User.findOne({ username: req.body.username })
     if (existingUser) {
@@ -16,7 +16,7 @@ router.post('/register', async (req, res) => {
     await newUser.save()
     return res.json({ status: 0 })
   } catch (error) {
-    console.log(error)
+    next(error)
   }
 })
 

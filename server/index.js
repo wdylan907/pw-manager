@@ -1,6 +1,8 @@
 const express = require('express')
 const session = require('express-session')
 const cors = require('cors')
+const errorHandler = require('./middleware/errorHandler')
+const unknownEndpoint = require('./middleware/unknownEndpoint')
 
 const deleteEntryRouter = require('./routes/delete-entry')
 const getIndexRouter = require('./routes/get-index')
@@ -32,6 +34,9 @@ app.use(postLoginRouter)
 app.use(postLogoutRouter)
 app.use(postRegisterRouter)
 app.use(putEntryRouter)
+
+app.use(unknownEndpoint)
+app.use(errorHandler)
 
 app.listen(port, () => {
   console.log(`server listening on port ${port}`)

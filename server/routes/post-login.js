@@ -2,7 +2,7 @@ const router = require('express').Router()
 const bcrypt = require('bcrypt')
 const User = require('../models/user')
 
-router.post('/login', async (req, res) => {
+router.post('/login', async (req, res, next) => {
   try {
     const user = await User.findOne({ username: req.body.username })
     if (!user) {
@@ -22,7 +22,7 @@ router.post('/login', async (req, res) => {
     res.statusCode = 200
     return res.json({ status: 0 })
   } catch (error) {
-    console.log(error)
+    next(error)
     res.statusCode = 401
     return res.json({ status: 2 })
   }
