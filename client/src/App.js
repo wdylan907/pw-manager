@@ -10,20 +10,9 @@ function App() {
 
   const { serverUrl, axios } = config
 
-  // useEffect(() => {
-  //   async function getView() {
-  //     let res = await axios.get(serverUrl)
-  //     setView(res.data)
-  //   }
-  //   getView()
-  // }, [axios, serverUrl])
-
   useEffect(() => {
     const logout = async () => {
-      // const res = await axios.post(`${serverUrl}/logout`)
-      //setView(res.data)
       await axios.post(`${serverUrl}/logout`)
-      setView('login')
     }
     logout()
   }, [axios, serverUrl])
@@ -39,7 +28,13 @@ function App() {
   } else if (view === 'registration') {
     return <Registration config={viewConfig} />
   } else if (view === 'dashboard') {
-    return <Dashboard config={viewConfig} encryptionKey={encryptionKey} />
+    return (
+      <Dashboard
+        config={viewConfig}
+        encryptionKey={encryptionKey}
+        view={view}
+      />
+    )
   }
 }
 

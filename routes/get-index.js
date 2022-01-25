@@ -1,8 +1,7 @@
 const router = require('express').Router()
-const isAuth = require('../middleware/isAuth')
 
-router.get('/', isAuth, (req, res) => {
-  res.status(200).send('dashboard')
+router.get('/', (req, res) => {
+  res.status(200).send('index')
 })
 
 module.exports = router
