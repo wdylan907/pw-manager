@@ -1,5 +1,5 @@
 const expect = require('expect.js')
-const app = require('../index')
+const app = require('../app')
 const User = require('../models/user')
 const Session = require('../models/session')
 const bcrypt = require('bcrypt')
@@ -19,7 +19,7 @@ describe('POST login', () => {
       password: 'asdasd',
     })
     expect(res.statusCode).to.be(401)
-    expect(JSON.parse(res.text).status).to.be(1)
+    expect(JSON.parse(res.text).code).to.be(1)
   })
 
   it('returns 401 when invalid username given', async () => {
@@ -28,7 +28,7 @@ describe('POST login', () => {
       password: 'asdasd',
     })
     expect(res.statusCode).to.be(401)
-    expect(JSON.parse(res.text).status).to.be(1)
+    expect(JSON.parse(res.text).code).to.be(1)
   })
 
   it('returns 200 when valid credentials given', async () => {
@@ -37,7 +37,7 @@ describe('POST login', () => {
       password: 'password',
     })
     expect(res.statusCode).to.be(200)
-    expect(JSON.parse(res.text).status).to.be(0)
+    expect(JSON.parse(res.text).code).to.be(0)
   })
 
   it('stores a session on login', async () => {

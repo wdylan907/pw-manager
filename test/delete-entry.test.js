@@ -1,5 +1,5 @@
 const expect = require('expect.js')
-const app = require('../index')
+const app = require('../app')
 const User = require('../models/user')
 const Session = require('../models/session')
 const bcrypt = require('bcrypt')
@@ -19,12 +19,12 @@ describe('DELETE entry', () => {
     })
   })
 
-  it('redirects to login if not logged in', async () => {
-    const res = await session(app).delete('/entry')
-    expect(res.statusCode).to.be(302)
-    expect(res.text).to.be('Found. Redirecting to /login')
-    expect(res.headers.location).to.be('/login')
-  })
+  // it('redirects to login if not logged in', async () => {
+  //   const res = await session(app).delete('/entry')
+  //   expect(res.statusCode).to.be(302)
+  //   expect(res.text).to.be('Found. Redirecting to /login')
+  //   expect(res.headers.location).to.be('/login')
+  // })
 
   it('deletes an entry', async () => {
     const user = await User.findOne({ username: 'testuser' })
