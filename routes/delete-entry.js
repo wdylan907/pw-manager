@@ -2,11 +2,11 @@ const router = require('express').Router()
 const User = require('../models/user')
 const isAuth = require('../middleware/isAuth')
 
-router.delete('/entry', isAuth, async (req, res, next) => {
+router.delete('/entry/:id', isAuth, async (req, res, next) => {
   try {
     const user = await User.findOne({ username: req.session.username })
     const newVault = user.vault.filter(entry => {
-      return entry._id.toString() !== req.body.id
+      return entry._id.toString() !== req.params.id
     })
     user.vault = newVault
     await user.save()
