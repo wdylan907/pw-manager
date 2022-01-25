@@ -26,14 +26,13 @@ const Registration = props => {
         username: event.target.elements[0].value,
         password: event.target.elements[1].value,
       }
-      const res = await axios.post(`${serverUrl}/register`, userInfo)
-      if (res.data.code === 0) {
+      try {
+        await axios.post(`${serverUrl}/register`, userInfo)
         event.target.elements[0].value = ''
         event.target.elements[1].value = ''
         event.target.elements[2].value = ''
         setAlert(0)
-        setView('login')
-      } else if (res.data.code === 1) {
+      } catch (error) {
         setAlert(1)
       }
     } else {

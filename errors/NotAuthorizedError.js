@@ -3,7 +3,6 @@ class NotAuthorizedError extends Error {
     super('not authorized')
     this.statusCode = 401
     this.name = 'NotAuthorizedError'
-    this.code = null
   }
 }
 

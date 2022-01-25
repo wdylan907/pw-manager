@@ -17,9 +17,8 @@ const Login = props => {
       username: event.target.elements[0].value,
       password: event.target.elements[1].value,
     }
-    let res
     try {
-      res = await axios.post(`${serverUrl}/login`, loginInfo)
+      await axios.post(`${serverUrl}/login`, loginInfo)
       props.setEncryptionKey(event.target.elements[1].value)
       setView('dashboard')
     } catch (error) {

@@ -3,7 +3,6 @@ class InvalidCredentialsError extends Error {
     super('invalid credentials')
     this.statusCode = 401
     this.name = 'InvalidCredentialsError'
-    this.code = 1
   }
 }
 
