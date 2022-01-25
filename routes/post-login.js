@@ -18,8 +18,7 @@ router.post('/login', async (req, res, next) => {
     }
     req.session.isAuth = true
     req.session.username = user.username
-    res.statusCode = 200
-    return res.json({ code: 0 })
+    return res.status(200).json({})
   } catch (error) {
     next(error)
   }
