@@ -19,20 +19,25 @@ describe('DELETE entry', () => {
     })
   })
 
-  // it('redirects to login if not logged in', async () => {
-  //   const res = await session(app).delete('/entry')
-  //   expect(res.statusCode).to.be(302)
-  //   expect(res.text).to.be('Found. Redirecting to /login')
-  //   expect(res.headers.location).to.be('/login')
-  // })
+  it('does not delete if not logged in', async () => {
+    let user = await User.findOne({ username: 'testuser' })
+    user.vault = [{ label: 'test' }]
+    await user.save()
+    const res = await session(app).delete(
+      `/entry/${user.vault[0]._id.toString()}`
+    )
+    expect(res.statusCode).to.be(401)
+    user = await User.findOne({ username: 'testuser' })
+    expect(user.vault.length).to.be(1)
+  })
 
   it('deletes an entry', async () => {
     const user = await User.findOne({ username: 'testuser' })
     user.vault = [{ label: 'test' }]
     await user.save()
-    const res = await authenticatedSession
-      .delete('/entry')
-      .send({ id: user.vault[0]._id.toString() })
+    const res = await authenticatedSession.delete(
+      `/entry/${user.vault[0]._id.toString()}`
+    )
     expect(res._body.vault.length).to.be(0)
   })
 

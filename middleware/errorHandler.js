@@ -13,6 +13,10 @@ const errorHandler = (error, req, res, next) => {
     return res.status(404).json({ message: 'unknown endpoint' })
   }
 
+  if (error.message === 'not authorized') {
+    return res.status(401).json({ message: 'not authorized' })
+  }
+
   next(error)
 }
 
