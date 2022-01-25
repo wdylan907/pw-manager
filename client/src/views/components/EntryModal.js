@@ -29,17 +29,17 @@ const EntryModal = props => {
       username: event.target.elements[1].value,
       password: event.target.elements[2].value,
     }
-    if (props.id) {
-      entryPlain.id = props.id
-    }
     const entryEncrypted = cryptography.encryptEntry(
       entryPlain,
       props.encryptionKey
     )
+    if (props.id) {
+      entryEncrypted.id = props.id
+    }
     if (props.function === 'new') {
       await axios.post(`${serverUrl}/entry`, entryEncrypted)
     } else if (props.function === 'update') {
-      await axios.put(`${serverUrl}/entry`, entryEncrypted)
+      await axios.put(`${serverUrl}/entry/${entryEncrypted.id}`, entryEncrypted)
     }
     props.handleClose()
     const newDataEncrypted = await axios.get(`${serverUrl}/user`)
