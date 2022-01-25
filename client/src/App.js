@@ -10,18 +10,20 @@ function App() {
 
   const { serverUrl, axios } = config
 
-  useEffect(() => {
-    async function getView() {
-      let res = await axios.get(serverUrl)
-      setView(res.data)
-    }
-    getView()
-  }, [axios, serverUrl])
+  // useEffect(() => {
+  //   async function getView() {
+  //     let res = await axios.get(serverUrl)
+  //     setView(res.data)
+  //   }
+  //   getView()
+  // }, [axios, serverUrl])
 
   useEffect(() => {
     const logout = async () => {
-      const res = await axios.post(`${serverUrl}/logout`)
-      setView(res.data)
+      // const res = await axios.post(`${serverUrl}/logout`)
+      //setView(res.data)
+      await axios.post(`${serverUrl}/logout`)
+      setView('login')
     }
     logout()
   }, [axios, serverUrl])

@@ -56,8 +56,8 @@ const Dashboard = props => {
   }
 
   const logout = async () => {
-    const res = await axios.post(`${serverUrl}/logout`)
-    setView(res.data)
+    await axios.post(`${serverUrl}/logout`)
+    setView('login')
   }
 
   useEffect(() => {

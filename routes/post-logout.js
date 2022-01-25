@@ -5,7 +5,7 @@ router.post('/logout', (req, res, next) => {
     if (error) {
       next(error)
     }
-    res.redirect('/login')
+    res.redirect('/')
   })
 })
 

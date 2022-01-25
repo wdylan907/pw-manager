@@ -41,9 +41,8 @@ const Registration = props => {
     }
   }
 
-  const goToLogin = async () => {
-    const res = await axios.get(`${serverUrl}/login`)
-    setView(res.data)
+  const goToLogin = () => {
+    setView('login')
   }
 
   return (
