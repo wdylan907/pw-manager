@@ -17,6 +17,10 @@ const errorHandler = (error, req, res, next) => {
     return res.status(401).json({ message: 'not authorized' })
   }
 
+  if (error.message === 'user does not exist') {
+    return res.status(404).json({ message: 'user does not exist' })
+  }
+
   next(error)
 }
 
