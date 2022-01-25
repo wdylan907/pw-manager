@@ -1,5 +1,7 @@
+const UnknownEndpointError = require('../errors/UnknownEndpointError')
+
 const unknownEndpoint = (req, res) => {
-  throw new Error('unknown endpoint')
+  throw new UnknownEndpointError()
 }
 
 module.exports = unknownEndpoint
