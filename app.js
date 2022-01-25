@@ -28,14 +28,14 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static('build'))
 }
 
-app.use(deleteEntryRouter)
 app.use(getIndexRouter)
 app.use(getUserRouter)
 app.use(postEntryRouter)
+app.use(putEntryRouter)
+app.use(deleteEntryRouter)
 app.use(postLoginRouter)
 app.use(postLogoutRouter)
 app.use(postRegisterRouter)
-app.use(putEntryRouter)
 
 app.use(unknownEndpoint)
 app.use(errorHandler)
