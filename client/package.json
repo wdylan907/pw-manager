@@ -17,6 +17,7 @@
     "web-vitals": "^2.1.2"
   },
   "scripts": {
+    "dev": "cross-env REACT_APP_SERVER_URL=http://localhost:5000 npm start",
     "start": "react-scripts start",
     "build": "react-scripts build && cp -r build .. && rm -rf build",
     "test": "react-scripts test",
@@ -39,5 +40,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }

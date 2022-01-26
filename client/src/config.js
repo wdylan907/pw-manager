@@ -2,8 +2,7 @@ import axios from 'axios'
 
 axios.defaults.withCredentials = true
 
-//const serverUrl = 'http://localhost:5000'
-const serverUrl = 'https://blooming-anchorage-99953.herokuapp.com'
+const serverUrl = process.env.REACT_APP_SERVER_URL
 
 const config = {
   serverUrl: serverUrl,
