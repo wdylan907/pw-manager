@@ -119,6 +119,12 @@ const Dashboard = props => {
               className='pt-3 pb-3'
               style={{ border: '5px solid #cecece' }}
             >
+              {vault.length === 0 && (
+                <p>
+                  Nothing here yet! Use the button on the upper left to add
+                  something.
+                </p>
+              )}
               <Accordion>
                 {vault.map(entry => {
                   return (
