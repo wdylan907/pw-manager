@@ -70,6 +70,9 @@ const Login = props => {
           </Container>
           <br />
           <AlertMessage alert={alert} />
+          <p>
+            <pre>Try it out! username: "demo" password: "demo"</pre>
+          </p>
         </Col>
       </Row>
     </div>

@@ -217,7 +217,7 @@ const Dashboard = props => {
             <br />
             <br />
             {props.isDemo && (
-              <p style={{ color: 'red' }}>
+              <p>
                 Note: demo user data is reset on login, so it will not persist
                 between sessions.
               </p>
