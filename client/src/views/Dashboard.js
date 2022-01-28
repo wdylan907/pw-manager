@@ -214,6 +214,14 @@ const Dashboard = props => {
                 })}
               </Accordion>
             </Container>
+            <br />
+            <br />
+            {props.isDemo && (
+              <p style={{ color: 'red' }}>
+                Note: demo user data is reset on login, so it will not persist
+                between sessions.
+              </p>
+            )}
           </Col>
         </Row>
       </div>

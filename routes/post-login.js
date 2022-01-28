@@ -2,6 +2,7 @@ const router = require('express').Router()
 const bcrypt = require('bcrypt')
 const User = require('../models/user')
 const InvalidCredentialsError = require('../errors/InvalidCredentialsError')
+const initDemo = require('../util/demo')
 
 router.post('/login', async (req, res, next) => {
   try {
@@ -18,6 +19,11 @@ router.post('/login', async (req, res, next) => {
     }
     req.session.isAuth = true
     req.session.username = user.username
+
+    if (req.session.username === 'demo') {
+      initDemo()
+    }
+
     return res.status(200).json({})
   } catch (error) {
     next(error)

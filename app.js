@@ -14,7 +14,7 @@ const postLogoutRouter = require('./routes/post-logout')
 const postRegisterRouter = require('./routes/post-register')
 const putEntryRouter = require('./routes/put-entry')
 
-const { corsConfig, sessionConfig, mongoURI } = require('./config')
+const { corsConfig, sessionConfig, mongoURI } = require('./util/config')
 
 mongoose.connect(mongoURI)
 
