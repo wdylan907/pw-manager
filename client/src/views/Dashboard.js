@@ -21,6 +21,7 @@ const Dashboard = props => {
   const [selectedData, setSelectedData] = useState({})
   const [showConfirmationAlert, setShowConfirmationAlert] = useState(false)
   const [passwordDisplayType, setPasswordDisplayType] = useState('password')
+  const [boxesChecked, setBoxesChecked] = useState(false)
 
   const handleCloseCreate = () => setShowCreate(false)
   const handleShowCreate = () => {
@@ -163,13 +164,16 @@ const Dashboard = props => {
                           controlId='formBasicCheckbox'
                         >
                           <Form.Check
+                            checked={boxesChecked}
                             type='checkbox'
                             label='Show Password'
                             onChange={() => {
-                              if (passwordDisplayType === 'password') {
+                              if (!boxesChecked) {
                                 setPasswordDisplayType('text')
+                                setBoxesChecked(true)
                               } else {
                                 setPasswordDisplayType('password')
+                                setBoxesChecked(false)
                               }
                             }}
                           />
