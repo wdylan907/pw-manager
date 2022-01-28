@@ -71,7 +71,7 @@ const Login = props => {
           <br />
           <AlertMessage alert={alert} />
           <p>
-            <pre>Try it out! username: "demo" password: "demo"</pre>
+            <pre>Look inside with username: "demo" + password: "demo"</pre>
           </p>
         </Col>
       </Row>
