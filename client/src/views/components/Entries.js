@@ -26,6 +26,7 @@ const Entries = props => {
     serverUrl,
     selectedData,
     setSelectedData,
+    filteredVault,
   } = props
 
   const handleCloseUpdate = () => setShowUpdate(false)
@@ -57,7 +58,7 @@ const Entries = props => {
 
   return (
     <Accordion>
-      {vault.map(entry => {
+      {filteredVault.map(entry => {
         return (
           <Accordion.Item key={entry._id} eventKey={entry._id}>
             <Accordion.Header>{entry.label}</Accordion.Header>
@@ -67,6 +68,7 @@ const Entries = props => {
                   <p className='ml-3'>{entry.username}</p>
                 </Row>
               )}
+
               {entry.password && (
                 <Form.Group className='mb-3' controlId='formBasicPassword'>
                   <Row>
@@ -91,26 +93,30 @@ const Entries = props => {
                   </Row>
                 </Form.Group>
               )}
-              <Form.Group className='mb-3' controlId='formBasicCheckbox'>
-                <Form.Check
-                  checked={boxesChecked}
-                  type='checkbox'
-                  label='Show Password'
-                  onChange={() => {
-                    if (!boxesChecked) {
-                      setPasswordDisplayType('text')
-                      setBoxesChecked(true)
-                    } else {
-                      setPasswordDisplayType('password')
-                      setBoxesChecked(false)
-                    }
-                  }}
-                />
-              </Form.Group>
+
+              {entry.password && (
+                <Form.Group className='mb-3' controlId='formBasicCheckbox'>
+                  <Form.Check
+                    checked={boxesChecked}
+                    type='checkbox'
+                    label='Show Password'
+                    onChange={() => {
+                      if (!boxesChecked) {
+                        setPasswordDisplayType('text')
+                        setBoxesChecked(true)
+                      } else {
+                        setPasswordDisplayType('password')
+                        setBoxesChecked(false)
+                      }
+                    }}
+                  />
+                </Form.Group>
+              )}
 
               <Button size='sm' entryid={entry._id} onClick={handleShowUpdate}>
                 edit
               </Button>
+
               <Button
                 className='float-end'
                 variant='danger'
@@ -119,6 +125,7 @@ const Entries = props => {
               >
                 delete
               </Button>
+
               <ConfirmationAlert
                 entryid={entry._id}
                 delete={deleteEntry}

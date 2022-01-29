@@ -7,6 +7,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import EntryModal from './components/EntryModal'
 import Entries from './components/Entries'
+import Filter from './components/Filter'
 
 const Dashboard = props => {
   const encryptionKey = props.encryptionKey
@@ -15,6 +16,7 @@ const Dashboard = props => {
   const [vault, setVault] = useState([])
   const [showCreate, setShowCreate] = useState(false)
   const [selectedData, setSelectedData] = useState({})
+  const [filter, setFilter] = useState('')
 
   const handleCloseCreate = () => setShowCreate(false)
 
@@ -55,27 +57,44 @@ const Dashboard = props => {
     getVault()
   }, [axios, serverUrl, props.encryptionKey])
 
+  const filteredVault =
+    filter === ''
+      ? vault
+      : vault.filter(entry => {
+          return entry.label.toLowerCase().startsWith(filter)
+        })
+
   return (
     <div>
       <Row>
         <Container className='pt-5 pb-2 col-6 align-self-center'>
           <br />
-          <Button size='sm' onClick={handleShowCreate}>
-            New Entry
-          </Button>
-          <Button size='sm' onClick={logout} className='float-end'>
-            Log Out
-          </Button>
-          <EntryModal
-            show={showCreate}
-            handleClose={handleCloseCreate}
-            vault={vault}
-            setVault={setVault}
-            encryptionKey={encryptionKey}
-            title={'New Entry'}
-            function={'new'}
-            selectedData={selectedData}
-          />
+          <Row>
+            <Col sm={3}>
+              <Button size='sm' onClick={handleShowCreate}>
+                New Entry
+              </Button>
+            </Col>
+            <Col sm={6}>
+              <Filter filter={filter} setFilter={setFilter} />
+            </Col>
+            <Col sm={3}>
+              <Button size='sm' onClick={logout} className='float-end'>
+                Log Out
+              </Button>
+            </Col>
+
+            <EntryModal
+              show={showCreate}
+              handleClose={handleCloseCreate}
+              vault={vault}
+              setVault={setVault}
+              encryptionKey={encryptionKey}
+              title={'New Entry'}
+              function={'new'}
+              selectedData={selectedData}
+            />
+          </Row>
         </Container>
       </Row>
       <Row className='pt-4 pb-3'>
@@ -94,6 +113,7 @@ const Dashboard = props => {
             <Entries
               vault={vault}
               setVault={setVault}
+              filteredVault={filteredVault}
               encryptionKey={encryptionKey}
               axios={axios}
               serverUrl={serverUrl}
